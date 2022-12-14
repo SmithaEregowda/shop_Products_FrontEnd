@@ -9,7 +9,7 @@ const ProductFileds = ({ productObj, handlefile, updateproductInput }) => {
       {productObj?.productImg&&
       <Avatar
       sx={{ width: 50, height: 50, bgcolor: '#11cd6b' }}
-      src={'http://localhost:8080/' + productObj?.productImg}
+      src={'https://shop-products-api.vercel.app/' + productObj?.productImg}
       variant="square"
     />
     }

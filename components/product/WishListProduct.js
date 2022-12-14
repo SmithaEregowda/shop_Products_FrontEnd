@@ -70,7 +70,7 @@ const WishListProduct = ({ prodId, cartItems, setLoading, setNotify,
             <div className='product-imgContainer'>
                 <Avatar
                     sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
-                    src={'http://localhost:8080/' + productdetails?.productImg}
+                    src={'https://shop-products-api.vercel.app/' + productdetails?.productImg}
                     variant="square"
                 />
             </div>

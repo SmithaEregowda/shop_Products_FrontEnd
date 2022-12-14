@@ -43,7 +43,7 @@ const ManageUsers = () => {
             <div className='user-imgContainer'>
               <Avatar
                 sx={{ width: 50, height: 50, bgcolor: '#11cd6b' }}
-                src={'http://localhost:8080/' + user?.imgurl}
+                src={'https://shop-products-api.vercel.app/' + user?.imgurl}
                 variant="square"
               />
             </div>

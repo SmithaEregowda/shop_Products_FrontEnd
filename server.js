@@ -11,7 +11,7 @@ const handle = app.getRequestHandler()
 
 const apiPaths = {
     '/api': {
-        target: 'http://localhost:8080', 
+        target: 'https://shop-products-api.vercel.app/', 
         pathRewrite: {
             '^/api': '/api'
         },

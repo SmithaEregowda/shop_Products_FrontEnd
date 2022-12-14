@@ -187,7 +187,7 @@ const HomePage = () => {
             <div className='product-imgContainer'>
               <Avatar
                 sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
-                src={'http://localhost:8080/' + prod?.productImg}
+                src={'https://shop-products-api.vercel.app/' + prod?.productImg}
                 variant="square"
               />
             </div>

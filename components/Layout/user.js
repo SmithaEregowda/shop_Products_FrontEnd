@@ -85,7 +85,7 @@ const UserData = ({ user }) => {
             userinfo?.imgurl?
             <Avatar 
           sx={{ width: 42, height: 32, bgcolor: '#11cd6b' }}
-           src={'http://localhost:8080/'+userinfo?.imgurl}
+           src={'https://shop-products-api.vercel.app/'+userinfo?.imgurl}
            >
           </Avatar>:
           <Avatar 
