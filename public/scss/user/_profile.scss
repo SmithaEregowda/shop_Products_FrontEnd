@@ -1,0 +1,51 @@
+.profile{
+  .profile-info{
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1rem;
+    padding: 2rem;
+    .user-profile-section{
+        display: grid;
+        grid-template-rows: 7rem auto;
+        grid-gap: 2rem;
+        .user-profile{
+            justify-content: center;
+            display: grid;
+            align-items: center;
+            width: 10rem;
+            margin: auto;
+            background-color: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 5px 5px 5px 5px #888888 !important;
+            .uploadBtn{
+                /* position: absolute; */
+                top: -2.5rem;
+                left: 3.5rem;
+            }
+        }
+        .user-details{
+            background-color: white;
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 5px 5px 5px 5px #888888 !important;
+            .input-field{
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+    .user-data{
+        background-color: white;
+        padding: 1rem;
+        border-radius: 1rem;
+        box-shadow: 5px 5px 5px 5px #888888 !important;
+        .input-field{
+            margin-bottom: 1rem;
+        }
+    }
+  }
+  .profile-action{
+    display: grid;
+    justify-content: center;
+  }
+}

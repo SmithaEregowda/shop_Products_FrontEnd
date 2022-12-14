@@ -1,0 +1,28 @@
+.layout{
+    border-radius: 0 !important;
+    background-color: #fff;
+    max-height: 4rem;
+    box-shadow: 0px 2px 1px -1px
+     rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
+      0px 1px 3px 0px rgb(0 0 0 / 12%);
+   div div{
+    //background-color: transparent !important;
+    box-shadow: none !important;
+   }
+   .title{
+    font-weight: bolder;
+    font-size: 1.7rem;
+    font-style: italic;
+    color: #11cd6b;
+   }
+    cursor: pointer;
+    .layout-items{
+        width: inherit;
+        /* padding: 4rem; */
+        display: grid;
+        grid-auto-flow: column;
+        overflow: auto;
+        align-items: flex-end;
+        margin-top: 0.5rem;
+    }
+}

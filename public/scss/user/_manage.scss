@@ -1,0 +1,58 @@
+.user-details{
+    margin-top: 3rem;
+    .createUser{
+        display: grid;
+        justify-content: flex-end;
+        margin: 0 0.5rem 0.5rem 0;
+    }
+    .users{
+        display: flex;
+        flex-direction: row;
+        .user-card{
+            background: white;
+            padding: 0rem;
+            width: 15rem;
+            margin: 0 1rem;
+            box-shadow: 5px 5px 5px 5px #d5cece !important;
+            &:hover{
+                box-shadow: 5px 5px 5px 5px #888888 !important;
+            }
+            .user-imgContainer{
+                padding: 1.5rem;
+                margin: 1rem;
+                background: #cccccc4d;
+                display: grid;
+                justify-content: center;
+            }
+            .user-name{
+                display: grid;
+                justify-content: center;
+                font-weight: 600;
+                text-transform: uppercase; 
+            }
+            .user-email{
+                display: grid;
+                justify-content: center;
+                font-weight: 300;
+                color: #888888;
+                margin: 0  1rem;
+            }
+            .user-prod{
+                display: grid;
+                justify-content: center;
+                font-weight: 600;
+                text-transform: uppercase; 
+            }
+        }
+        .user-Actions{
+                display: grid;
+                justify-self: center;
+                padding: 1rem;
+        }
+        }
+        .pagination{
+            display: grid;
+            justify-content: flex-end;
+            padding: 1rem;
+        }
+    }

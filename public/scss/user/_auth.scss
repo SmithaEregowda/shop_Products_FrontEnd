@@ -1,0 +1,40 @@
+    .image-container{
+        .image{
+            border-radius: 1rem;
+        }
+        height: 100% !important;
+        cursor: pointer;
+    } 
+    .form-Item{
+        .input-items{
+            // max-height: 25rem;
+            // overflow: auto;
+            .input-field {
+                padding: 0 0 1rem 0;
+                div{
+                    width: 100%;
+                }
+            }
+        }
+        .buttonActions{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+    }
+
+    .loader{
+        width: 100%;
+    }
+    .dialogTitle {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .forgotPassword{
+        cursor: pointer;
+        color: green;
+        display: grid;
+        justify-content: end;
+    }

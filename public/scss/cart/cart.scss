@@ -1,0 +1,68 @@
+.cart-details{
+    .cart-Items{
+        max-height: 30rem;
+        overflow: auto;
+        .cart-Item{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background: white;
+            padding: 1rem;
+            width: 90%;
+            margin: 1rem;
+            box-shadow: 5px 5px 5px 5px #d5cece !important;
+            &:hover{
+                box-shadow: 5px 5px 5px 5px #888888 !important;
+            }
+            .product-details{
+
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                .cart-description{
+                    margin: 0 0.5rem;
+                    width: 20rem;
+                    .product-title{
+                        display: grid;
+                        justify-content: center;
+                        font-weight: 600;
+                        text-transform: uppercase; 
+                    }
+                    .product-subTitle{
+                        display: grid;
+                        justify-content: center;
+                        font-weight: 300;
+                        color: #888888;
+                        margin: 0 0.2rem;
+                    }
+                }
+                .cart-quantity{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    grid-gap: 0.5rem;
+                    margin: 0 0.5rem 0 2rem;
+                    input{
+                        width: 3rem;
+                        border: none;
+                    }
+                }
+               
+            }
+            
+            .cart-Actions{
+                display: grid;
+                grid-template-columns: auto auto;
+                grid-gap: 1rem;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+    .cart-Actions{
+        width: 90%;
+        margin: 1rem;
+    }
+}

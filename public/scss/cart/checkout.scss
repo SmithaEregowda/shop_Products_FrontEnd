@@ -1,0 +1,59 @@
+.checkout-details{
+    .order-details{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        .product-summary{
+                max-height: 30rem;
+                overflow: auto;
+                .cart-Item{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    background: white;
+                    padding: 1rem;
+                    //width: 50%;
+                    margin: 1rem;
+                    box-shadow: 5px 5px 5px 5px #d5cece !important;
+                    &:hover{
+                        box-shadow: 5px 5px 5px 5px #888888 !important;
+                    }
+                    .product-details{
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: center;
+                        .cart-description{
+                            margin: 0 2rem;
+                            width: fit-content;
+                            .product-title{
+                                display: grid;
+                                justify-content: center;
+                                font-weight: 600;
+                                text-transform: uppercase; 
+                            }
+                            .product-subTitle{
+                                display: grid;
+                                justify-content: center;
+                                font-weight: 300;
+                                color: #888888;
+                                margin: 0 0.2rem;
+                            }
+                        }
+                        .cart-price{
+                            display: grid;
+                            margin-right: 0.5rem;
+                        }
+                    }
+            }
+        }
+        .ordersection{
+            display: grid;
+        }
+    }
+    .orderActions{
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap:2rem;
+        margin: 1rem;
+    }
+}

@@ -1,0 +1,29 @@
+.add-fileds{
+    margin: 2rem 2rem 0 2rem;
+    padding: 2rem;
+    background: white;
+    box-shadow: 5px 5px 5px 5px #888888 !important;
+    .input-field{
+        margin-bottom: 0.5rem;
+    }
+}
+.add-product{
+    .btnActions{
+        margin: 2rem;
+        padding: 2rem;
+        background: white;
+        box-shadow: 5px 5px 5px 5px #888888 !important;
+        display: grid;
+        justify-content: center;
+    }
+}
+.edit-product{
+    .btnActions{
+        margin: 2rem;
+        padding: 2rem;
+        background: white;
+        box-shadow: 5px 5px 5px 5px #888888 !important;
+        display: grid;
+        justify-content: center;
+    }
+}
