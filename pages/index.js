@@ -21,7 +21,10 @@ const HomePage = () => {
   const [notifydata, setMessage] = useState({})
   const router = useRouter();
 
+
+
   useEffect(() => {
+    console.log(process.env.NEXT_PUBLIC_HOST)
     setuserId(cookieCutter.get('userId'))
     const token = cookieCutter.get('token')
     if(userData?.userType === "internal user" ){

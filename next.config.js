@@ -1,6 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
+module.exports = {
+  env: {
+    Host: 'https://shop-products-api.vercel.app/',
+  },
 }
-
-module.exports = nextConfig
