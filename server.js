@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const server = process.env.SERVER;
-
+console.log(server)
 const apiPaths = {
     '/api': {
         target: server, 
