@@ -1,30 +1,31 @@
 const express = require('express')
 const next = require('next')
 const { createProxyMiddleware } = require("http-proxy-middleware")
-
+require('dotenv').config();
 const port = process.env.PORT || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
 const server = process.env.SERVER;
-console.log(server)
-const apiPaths = {
-    '/api': {
-        target: server, 
-        pathRewrite: {
-            '^/api': '/api'
-        },
-        changeOrigin: true
-    }
-}
+
+
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 app.prepare().then(() => {
+  console.log(process.env.SERVER)
   const server = express()
  
   if (isDevelopment) {
-    server.use('/api', createProxyMiddleware(apiPaths['/api']));
+    server.use('/api', createProxyMiddleware({
+      '/api': {
+          target: server, 
+          pathRewrite: {
+              '^/api': '/api'
+          },
+          changeOrigin: true
+      }
+  }));
   }
 
   server.all('*', (req, res) => {
@@ -36,5 +37,5 @@ app.prepare().then(() => {
     console.log(`> Ready on http://localhost:${port}`)
   })
 }).catch(err => {
-    console.log('Error:::::', err)
+  console.log(`> Ready on http://localhost:${port}`)
 })
