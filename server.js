@@ -14,7 +14,6 @@ const server = process.env.SERVER;
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 app.prepare().then(() => {
-  console.log(process.env.SERVER)
   const server = express()
 
   const apiPaths = {
