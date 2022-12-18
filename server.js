@@ -6,10 +6,11 @@ const port = process.env.PORT || 3000
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
+const server = process.env.SERVER;
 
 const apiPaths = {
     '/api': {
-        target: 'https://shop-products-api.vercel.app/', 
+        target: server, 
         pathRewrite: {
             '^/api': '/api'
         },
