@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+      {
+        "source": "/api/:path*",
+        "destination": "https://shop-products-api.vercel.app"
+      },
+      {
+        "source": "/api/:path*/",
+        "destination": "https://shop-products-api.vercel.app/"
+      }
+    ]
+  }
