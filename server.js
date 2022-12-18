@@ -8,7 +8,7 @@ const port=3000
 const dev=true
 const app = next({ dev })
 const handle = app.getRequestHandler()
-
+console.log(process.env.NODE_ENV)
 const apiPaths = {
     '/api': {
         target: process.env.NEXT_PUBLIC_HOST||'https://shop-products-api.vercel.app/', 
