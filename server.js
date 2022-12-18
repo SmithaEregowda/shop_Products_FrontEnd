@@ -10,22 +10,25 @@ const server = process.env.SERVER;
 
 
 
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 app.prepare().then(() => {
   console.log(process.env.SERVER)
   const server = express()
- 
+
+  const apiPaths = {
+    '/api': {
+        target: process.env.SERVER, 
+        pathRewrite: {
+            '^/api': '/api'
+        },
+        changeOrigin: true
+    }
+  }
+
   if (isDevelopment) {
-    server.use('/api', createProxyMiddleware({
-      '/api': {
-          target: server, 
-          pathRewrite: {
-              '^/api': '/api'
-          },
-          changeOrigin: true
-      }
-  }));
+    server.use('/api', createProxyMiddleware(apiPaths['/api']));
   }
 
   server.all('*', (req, res) => {
@@ -37,5 +40,5 @@ app.prepare().then(() => {
     console.log(`> Ready on http://localhost:${port}`)
   })
 }).catch(err => {
-  console.log(`> Ready on http://localhost:${port}`)
+  console.log(`> err${err}`)
 })
