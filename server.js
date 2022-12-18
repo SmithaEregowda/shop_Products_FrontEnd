@@ -2,16 +2,14 @@ const express = require('express')
 const next = require('next')
 const { createProxyMiddleware } = require("http-proxy-middleware")
 
-// const port = process.env.PORT || 3000
-// const dev = process.env.NODE_ENV !== 'production'
-const port=3000
-const dev=true
+const port = process.env.PORT || 3000
+const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
 const handle = app.getRequestHandler()
-console.log(process.env.NODE_ENV)
+
 const apiPaths = {
     '/api': {
-        target: process.env.NEXT_PUBLIC_HOST, 
+        target: 'https://shop-products-api.vercel.app/', 
         pathRewrite: {
             '^/api': '/api'
         },
@@ -19,8 +17,8 @@ const apiPaths = {
     }
 }
 
-// const isDevelopment = process.env.NODE_ENV !== 'production'
-const isDevelopment = true;
+const isDevelopment = process.env.NODE_ENV !== 'production'
+
 app.prepare().then(() => {
   const server = express()
  
