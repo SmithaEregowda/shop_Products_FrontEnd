@@ -11,7 +11,7 @@ const handle = app.getRequestHandler()
 console.log(process.env.NODE_ENV)
 const apiPaths = {
     '/api': {
-        target: process.env.NEXT_PUBLIC_HOST||'https://shop-products-api.vercel.app/', 
+        target: process.env.NEXT_PUBLIC_HOST, 
         pathRewrite: {
             '^/api': '/api'
         },
