@@ -34,8 +34,23 @@ const HomePage = () => {
     getCartByUserId(token, cookieCutter.get('userId'));
     getWishListByUserId(token, cookieCutter.get('userId'))
     }
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    };
+
+    const data =fetch(`https://shop-products-api-smithaeregowda.vercel.app/api/products`,requestOptions)
+       .then(res => {
+           return res.json();
+       }).then(data=>{return data;} )
+
+        setProducts(data?.products)
+        setPagination(data?.pagination)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.userType]);
+
   const getProductsByUser=()=>{
     const userId=cookieCutter.get('userId');
     const token = cookieCutter.get('token')
