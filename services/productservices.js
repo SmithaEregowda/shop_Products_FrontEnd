@@ -1,5 +1,10 @@
+
+let API_PATH=''
+if(process.env.NODE_ENV==="production"){
+    API_PATH='https://shop-products-api-1q6w.vercel.app'
+}
 export  function getAllProducts(requestOptions) {
-    const data =fetch(`/api/products`,requestOptions)
+    const data =fetch(`${API_PATH}/api/products`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
@@ -7,7 +12,7 @@ export  function getAllProducts(requestOptions) {
    }
 
    export  function getProductById(id,requestOptions) {
-    const data =fetch(`/api/products/${id}`,requestOptions)
+    const data =fetch(`${API_PATH}/api/products/${id}`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
@@ -15,7 +20,7 @@ export  function getAllProducts(requestOptions) {
    }
 
    export  function addProduct(headers,formData) {
-    const data =fetch(`/api/products/create`,{
+    const data =fetch(`${API_PATH}/api/products/create`,{
         method:'POST',
         headers:headers,
         body:formData
@@ -26,7 +31,7 @@ export  function getAllProducts(requestOptions) {
            return data;
    }
    export  function updateProduct(id,headers,formData) {
-    const data =fetch(`/api/products/${id}`,{
+    const data =fetch(`${API_PATH}/api/products/${id}`,{
         method:'PUT',
         headers:headers,
         body:formData
@@ -38,7 +43,7 @@ export  function getAllProducts(requestOptions) {
    }
 
    export  function deleteProductById(id,requestOptions) {
-    const data =fetch(`/api/products/${id}`,requestOptions)
+    const data =fetch(`${API_PATH}/api/products/${id}`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
@@ -46,7 +51,7 @@ export  function getAllProducts(requestOptions) {
    }
 
    export  function getRequestByUser(id,requestOptions) {
-    const data =fetch(`/api/req/${id}`,requestOptions)
+    const data =fetch(`${API_PATH}/api/req/${id}`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
@@ -54,7 +59,7 @@ export  function getAllProducts(requestOptions) {
    }
 
    export  function processRequest(requestOptions) {
-    const data =fetch(`/api/req/process`,requestOptions)
+    const data =fetch(`${API_PATH}/api/req/process`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
@@ -62,7 +67,7 @@ export  function getAllProducts(requestOptions) {
    }
 
    export  function getProductsByUserId(id,requestOptions) {
-    const data =fetch(`/api/products/user/${id}`,requestOptions)
+    const data =fetch(`${API_PATH}/api/products/user/${id}`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )

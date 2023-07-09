@@ -1,5 +1,11 @@
+
+let API_PATH=''
+if(process.env.NODE_ENV==="production"){
+    API_PATH='https://shop-products-api-1q6w.vercel.app'
+}
+
 export  function postWishList(requestOptions) {
-    const data =fetch(`/api/wishlist/create`,requestOptions)
+    const data =fetch(`${API_PATH}/api/wishlist/create`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
@@ -7,7 +13,7 @@ export  function postWishList(requestOptions) {
    }
 
    export  function getwishlistByUser(userId,requestOptions) {
-    const data =fetch(`/api/wishlist/${userId}`,requestOptions)
+    const data =fetch(`${API_PATH}/api/wishlist/${userId}`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
@@ -15,7 +21,7 @@ export  function postWishList(requestOptions) {
    }
 
    export  function removefromwishlist(userId,prodId,requestOptions) {
-    const data =fetch(`/api/wishlist/${userId}?prodId=${prodId}`,requestOptions)
+    const data =fetch(`${API_PATH}/api/wishlist/${userId}?prodId=${prodId}`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )
