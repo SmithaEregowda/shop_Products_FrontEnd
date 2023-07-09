@@ -9,7 +9,7 @@ const handle = app.getRequestHandler()
 const server = process.env.SERVER;
 
 
-
+console.log(process.env.NODE_ENV)
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -26,9 +26,9 @@ app.prepare().then(() => {
     }
   }
 
-  //if (isDevelopment) {
+  if (isDevelopment) {
     server.use('/api', createProxyMiddleware(apiPaths['/api']));
-  //}
+  }
 
   server.all('*', (req, res) => {
     return handle(req, res)

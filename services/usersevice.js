@@ -1,5 +1,9 @@
 export  function signup(requestOptions) {
- const data =fetch(`/api/user/signup`,requestOptions)
+    let API_PATH=''
+    if(process.env.ENV==="production"){
+        API_PATH='https://shop-products-api-1q6w.vercel.app/'
+    }
+ const data =fetch(`${API_PATH}/api/user/signup`,requestOptions)
     .then(res => {
         return res.json();
     }).then(data=>{return data;} )
