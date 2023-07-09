@@ -1,6 +1,6 @@
 export  function signup(requestOptions) {
     let API_PATH=''
-    if(process.env.ENV==="production"){
+    if(process.env.NODE_ENV==="production"){
         API_PATH='https://shop-products-api-1q6w.vercel.app/'
     }
  const data =fetch(`${API_PATH}/api/user/signup`,requestOptions)
