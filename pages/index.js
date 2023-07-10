@@ -20,8 +20,7 @@ const HomePage = () => {
   const [notify, setNotify] = useState(false)
   const [notifydata, setMessage] = useState({})
   const router = useRouter();
-
-
+  const API_PATH='https://shop-products-api-1q6w.vercel.app'
 
   useEffect(() => {
     setuserId(cookieCutter.get('userId'))
@@ -36,18 +35,14 @@ const HomePage = () => {
     }
     const requestOptions = {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
     };
 
-    const data =fetch(`https://shop-products-api-smithaeregowda.vercel.app/api/products`,requestOptions)
-       .then(res => {
-           return res.json();
-       }).then(data=>{return data;} )
-
+    getAllProducts(requestOptions)
+      .then(data => {
         setProducts(data?.products)
         setPagination(data?.pagination)
+      })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.userType]);
 
@@ -119,51 +114,82 @@ const HomePage = () => {
   }
 
   const handleAddToCart = (prodId) => {
-    const payload = {
-      userId: cookieCutter.get('userId'),
-      prodId: prodId
-    }
     const token = cookieCutter.get('token');
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(payload)
-    };
-
-    postCart(requestOptions).then((data) => {
-      setMessage(data)
-      setNotify(true)
-      setLoading(false)
-      router.reload('/')
-    })
+    if(token){
+      const payload = {
+        userId: cookieCutter.get('userId'),
+        prodId: prodId
+      }
+     
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      };
+  
+      postCart(requestOptions).then((data) => {
+        setMessage(data)
+        setNotify(true)
+        setLoading(false)
+        router.reload('/')
+      })
+    }else{
+      setMessage({
+        message:"please try to login"
+      })
+        setNotify(true)
+    }
+    
   }
 
   const addtoWishListHandler = (prodId) => {
-    const payload = {
-      userId: cookieCutter.get('userId'),
-      prodId: prodId
-    }
     const token = cookieCutter.get('token');
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(payload)
-    };
-
-    postWishList(requestOptions).then((data) => {
-      setMessage(data)
+    if(token){
+      const payload = {
+        userId: cookieCutter.get('userId'),
+        prodId: prodId
+      }
+      
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      };
+  
+      postWishList(requestOptions).then((data) => {
+        setMessage(data)
+        setNotify(true)
+        setLoading(false)
+        router.reload('/')
+      })
+    }else{
+      setMessage({
+        message:"please try to login"
+      })
       setNotify(true)
-      setLoading(false)
-      router.reload('/')
-    })
+    }
   }
 
+ const checkoutHandler=()=>{
+  const token = cookieCutter.get('token');
+ if(token){
+  router.push({
+    pathname: 'checkout',
+    query: { id: prod?._id, isfromcart: false }
+  })
+ }else{
+  setMessage({
+    message:"please try to login"
+  })
+    setNotify(true)
+}
+ }
 
   return (
     <div className='products-details'>
@@ -187,7 +213,7 @@ const HomePage = () => {
           <div className='product-card' key={prod?._id}>
             {
               <div className='wishlist-Icon'>
-                {userData?.userType === "internal user" ? "" :
+                {(userData?.userType === "internal user"||!userData) ? "" :
                   (wishListItems && wishListItems.length > 0 &&
                     wishListItems.findIndex(p => p.productId.toString() === prod?._id) > -1) ?
                     <FavoriteIcon
@@ -204,7 +230,7 @@ const HomePage = () => {
             <div className='product-imgContainer'>
               <Avatar
                 sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
-                src={'https://shop-products-api.vercel.app/' + prod?.productImg}
+                src={`${API_PATH}/` + prod?.productImg}
                 variant="square"
               />
             </div>
@@ -270,10 +296,7 @@ const HomePage = () => {
                   <Button
                     variant="contained"
                     color='error'
-                    onClick={() => router.push({
-                      pathname: 'checkout',
-                      query: { id: prod?._id, isfromcart: false }
-                    })}
+                    onClick={checkoutHandler}
                     fullWidth
                   >
                     BUY NOW
