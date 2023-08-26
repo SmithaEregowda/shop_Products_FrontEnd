@@ -9,6 +9,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { getwishlistByUser, postWishList } from '../services/wishlistsevice';
 import Footersection from '../components/footer/footersection';
+import CarouselComponent from '../components/carousel';
+
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -194,6 +196,7 @@ const HomePage = () => {
 
   return (
   <div>
+      <CarouselComponent />
       <div className='products-details'>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
