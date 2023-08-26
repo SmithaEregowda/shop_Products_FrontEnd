@@ -1,0 +1,44 @@
+.footer{
+    background-color: #172337;
+    color: white;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: calc(100vh - 41rem);
+    width: 100%;
+    .detailSection{
+    background-color: #172337;
+    color: white;
+    padding: 1rem 0;
+    display:flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    .singleSection{
+        font-size: 12px;
+            font-weight: 400;
+        .rowHeading{
+            color: #878787;
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 9px;
+        }
+        .dataRow div{
+            line-height: 2;
+        }
+    }
+    }
+    .linkInfo{
+            border-top: 1px solid #454d5e;
+            padding: 25px 0;
+            color: white;
+            font-size: 12px;
+            font-weight: 400;
+            margin-bottom: 9px;
+            display: grid;
+            grid-template-columns: 1fr 10rem;
+            div{
+                display: flex;
+                justify-content: space-around;
+            }
+    }
+}

@@ -8,6 +8,7 @@ import { clearCart, getCartByUser, postCart } from '../services/cartservice';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { getwishlistByUser, postWishList } from '../services/wishlistsevice';
+import Footersection from '../components/footer/footersection';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -192,7 +193,8 @@ const HomePage = () => {
  }
 
   return (
-    <div className='products-details'>
+  <div>
+      <div className='products-details'>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={loading}
@@ -229,20 +231,19 @@ const HomePage = () => {
             }
             <div className='product-imgContainer'>
               <Avatar
-                sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
+                sx={{ width: "100%", height: 150, bgcolor: '#11cd6b' }}
                 src={`${API_PATH}/` + prod?.productImg}
                 variant="square"
               />
             </div>
+            <div className="product-footer">
             <div className='product-title'>
               {prod?.title}
             </div>
-            <div className='product-subTitle'>
-              {prod?.subTitle}
-            </div>
             <div className='product-price'>
-              {prod?.price}
+              RS.{prod?.price}
             </div>
+              </div>
             <div className='product-Actions'>
               {userData?.userType === "internal user" ?
                 (
@@ -317,7 +318,10 @@ const HomePage = () => {
             color='primary'
           />}
       </div>
+     
     </div >
+     <Footersection />
+  </div>
   )
 }
 
