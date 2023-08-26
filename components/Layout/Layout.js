@@ -30,7 +30,7 @@ const Layout = ({ children }) => {
     }, [userdata])
     return (
         <div className='layout'>
-            <Grid container spacing={0}>
+            <Grid container spacing={0} className="materialGrid">
                 <Grid item xs={2}>
                     <Item>
                         <div onClick={()=>router.push('/')} className='title'>
