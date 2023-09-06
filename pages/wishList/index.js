@@ -1,14 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { getwishlistByUser } from '../../services/wishlistsevice'
-import { Backdrop, CircularProgress, Snackbar } from '@mui/material'
+import { Backdrop, Button, CircularProgress, Snackbar } from '@mui/material'
 import WishListProduct from '../../components/product/WishListProduct'
 import { getCartByUser } from '../../services/cartservice';
+import { Image } from '@mui/icons-material'
+import { useRouter } from 'next/router';
 const WishList = () => {
     const [wishListItems, setWishListItems] = useState([]);
     const [cartItems, setCartItems] = useState([])
     const [loading, setLoading] = useState(false)
     const [notify, setNotify] = useState(false)
+    const router = useRouter();
     const [notifydata, setMessage] = useState({})
     useEffect(() => {
         const token = cookieCutter.get('token')
@@ -57,8 +61,9 @@ const WishList = () => {
                 message={notifydata?.message}
                 key={'top' + 'right'}
             />
+            {wishListItems?.length>0 ?
             <div className='products'>
-                {wishListItems && wishListItems.map(prod => (
+                { wishListItems.map(prod => (
                     <WishListProduct
                         key={prod?.productId}
                         prodId={prod?.productId}
@@ -68,10 +73,25 @@ const WishList = () => {
                         setMessage={setMessage}
                         getWishListByUserId={getWishListByUserId}
                     />
-                ))
-
-                }
+                ))}
+            </div>:
+            <div className='emptyicon'>
+            <img src="/images/emptywishlist.jpg" alt="emptywishlist" width={400} height={400} />
+            <div className='info'>No Items Found in Wishlist</div>
+            <div className='actionBtn'>                      
+                <Button
+                        variant="contained"
+                        color='success'
+                        onClick={() => router.push({
+                          pathname: '/'
+                        })}
+                        fullWidth
+                      >
+                        Add to WishList
+                      </Button>
+                      </div>
             </div>
+        }
         </div>
     )
 }

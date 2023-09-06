@@ -66,3 +66,20 @@
             padding: 1rem;
         }
     }
+
+.emptyicon{
+    display: grid;
+    justify-content: center;
+    padding: 2rem 0;
+    .info{
+        padding: 1rem 0;
+        text-align: center;
+        color: #918080;
+        text-transform: capitalize;
+        font-size: 1.2rem;
+        font-family: fantasy;
+    }
+    .actionBtn{
+        padding: 1rem 0;
+    }
+}

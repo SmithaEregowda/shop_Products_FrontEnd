@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { getCartByUser } from '../../services/cartservice';
@@ -54,7 +55,9 @@ const Cart = () => {
                 message={notifydata?.message}
                 key={'top' + 'right'}
             />
-            <div className='cart-Items'>
+            {cartItems?.length>0&&
+            <div>
+                <div className='cart-Items'>
                 {
                     cartItems && cartItems?.products?.length > 0
                     && cartItems.products.map(prod => (
@@ -77,6 +80,23 @@ const Cart = () => {
                 >
                     BUY NOW
                 </Button>
+            </div>
+                </div>}
+            <div className='emptyicon'>
+            <img src="/images/emptycart.jpg" alt="emptywishlist" width={400} height={400} />
+            <div className='info'>No Items Found in Cart</div>
+            <div className='actionBtn'>                      
+                <Button
+                        variant="contained"
+                        color='success'
+                        onClick={() => router.push({
+                          pathname: '/'
+                        })}
+                        fullWidth
+                      >
+                        Add to Cart
+                      </Button>
+                      </div>
             </div>
         </div>
     )
