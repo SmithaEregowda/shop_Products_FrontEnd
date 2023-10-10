@@ -38,6 +38,7 @@ const Cart = () => {
             }
         })
     }
+    console.log(cartItems)
     return (
         <div className='cart-details'>
             <Backdrop
@@ -55,7 +56,7 @@ const Cart = () => {
                 message={notifydata?.message}
                 key={'top' + 'right'}
             />
-            {cartItems?.length>0&&
+            {cartItems?.products?.length>0?
             <div>
                 <div className='cart-Items'>
                 {
@@ -81,8 +82,7 @@ const Cart = () => {
                     BUY NOW
                 </Button>
             </div>
-                </div>}
-            <div className='emptyicon'>
+                </div>:<div className='emptyicon'>
             <img src="/images/emptycart.jpg" alt="emptywishlist" width={400} height={400} />
             <div className='info'>No Items Found in Cart</div>
             <div className='actionBtn'>                      
@@ -97,7 +97,8 @@ const Cart = () => {
                         Add to Cart
                       </Button>
                       </div>
-            </div>
+            </div>}
+            
         </div>
     )
 }

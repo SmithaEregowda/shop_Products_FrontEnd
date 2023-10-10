@@ -1,0 +1,25 @@
+.wishlistWrapper{
+    width: 100%;
+    .titleConatiner{
+        display: grid;
+        justify-content: center;
+        margin: 0.5rem 0;
+        .image{
+            display: grid;
+            justify-content: center;
+        }
+        .title{
+            font-size: 3.5rem;
+            font-family: fantasy;
+            font-weight: 300;
+        }
+    }
+    .wishlistColums{
+        padding: 4rem 1rem 1rem;
+    display: grid;
+    grid-template-columns: 40% 15% 15%;
+    .wishlistprods{
+        display: grid;
+    }
+    }
+}

@@ -5,9 +5,11 @@ import cookieCutter from 'cookie-cutter'
 import { postCart } from '../../services/cartservice';
 import { useRouter } from 'next/router';
 import { removefromwishlist } from '../../services/wishlistsevice';
+import styles from './wishlist.module.scss'
 
 const WishListProduct = ({ prodId, cartItems, setLoading, setNotify,
     setMessage, getWishListByUserId }) => {
+        const API_PATH='https://shop-products-api-1q6w.vercel.app'
     const [productdetails, setDetails] = useState({});
     const router = useRouter();
     useEffect(() => {
@@ -66,25 +68,27 @@ const WishListProduct = ({ prodId, cartItems, setLoading, setNotify,
     }
 
     return (
-        <div className='product-card' key={productdetails?.productId}>
+        <div className={styles.wishlistRow} key={productdetails?.productId}>
+            <div className={styles.prodImage}>
             <div className='product-imgContainer'>
                 <Avatar
                     sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
-                    src={'https://shop-products-api.vercel.app/' + productdetails?.productImg}
+                    src={`${API_PATH}/` + productdetails?.productImg}
                     variant="square"
                 />
             </div>
-            <div className='product-title'>
+            <div className={styles.prodInfo}>
                 {productdetails?.title}
             </div>
-            <div className='product-subTitle'>
-                {productdetails?.subTitle}
             </div>
-            <div className='product-price'>
+            <div className={styles.prodInfo}>
                 RS.{productdetails?.price}
             </div>
-            <div className='product-Actions'>
-                <div className='add-Delete'>
+            <div className={styles.prodInfo}>
+                In stock
+            </div>
+            <div className={styles.prodInfo}>
+                <div className={styles.actionItems}>
                     {
                         (cartItems && cartItems.length > 0 &&
                             cartItems.findIndex(p => p.product.toString() === productdetails?._id) > -1) ?

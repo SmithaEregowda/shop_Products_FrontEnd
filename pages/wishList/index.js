@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { getwishlistByUser } from '../../services/wishlistsevice'
 import { Backdrop, Button, CircularProgress, Snackbar } from '@mui/material'
-import WishListProduct from '../../components/product/WishListProduct'
+import WishListProduct from '../../components/wishlist/WishListProduct'
 import { getCartByUser } from '../../services/cartservice';
 import { Image } from '@mui/icons-material'
 import { useRouter } from 'next/router';
@@ -62,7 +62,18 @@ const WishList = () => {
                 key={'top' + 'right'}
             />
             {wishListItems?.length>0 ?
-            <div className='products'>
+            <div className="wishlistWrapper">
+                <div className='titleConatiner'>
+                    <div className='image'><img src='/images/hearticon.svg' alt='heart' width={100} height={100} /></div>
+                    <div className='title'>My wishlist({wishListItems?.length?wishListItems?.length:0})</div>
+                </div>
+                <div className='wishlistColums'>
+                <div>Product Name</div>
+                <div>price</div>
+                <div>stock</div>
+                {/* <div>stock</div> */}
+                </div>
+                <div className='wishlistprods'>
                 { wishListItems.map(prod => (
                     <WishListProduct
                         key={prod?.productId}
@@ -74,6 +85,7 @@ const WishList = () => {
                         getWishListByUserId={getWishListByUserId}
                     />
                 ))}
+            </div>
             </div>:
             <div className='emptyicon'>
             <img src="/images/emptywishlist.jpg" alt="emptywishlist" width={400} height={400} />
