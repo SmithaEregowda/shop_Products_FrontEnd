@@ -14,12 +14,21 @@
             font-weight: 300;
         }
     }
+    .tableContainer{
+        padding: 0 5rem;
+    }
     .wishlistColums{
         padding: 4rem 1rem 1rem;
     display: grid;
     grid-template-columns: 40% 15% 15%;
     .wishlistprods{
         display: grid;
+        
     }
+    }
+    .wishlistprods{
+        max-height: calc(100vh - 25rem);
+        overflow: auto;
+        padding-right: 1rem;
     }
 }

@@ -5,6 +5,7 @@ import { getCartByUser } from '../../services/cartservice';
 import { Avatar, Backdrop, Button, CircularProgress, Pagination, Snackbar } from '@mui/material';
 import { getProductById } from '../../services/productservices';
 import { useRouter } from 'next/router';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartProduct from '../../components/product/cartProduct';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([])
@@ -56,6 +57,17 @@ const Cart = () => {
                 message={notifydata?.message}
                 key={'top' + 'right'}
             />
+
+            {cartItems?.products?.length>0&&
+            <div className='cartIcon'>
+                <ShoppingCartIcon 
+                    color="success"
+                    sx={{ fontSize: 70 }}
+                    className="iconCart"
+                />
+                <div className='title'>Cart({cartItems?.products?.length?cartItems?.products?.length:0})</div>
+            </div>}
+
             {cartItems?.products?.length>0?
             <div>
                 <div className='cart-Items'>
@@ -72,17 +84,18 @@ const Cart = () => {
 
                 }
             </div>
-            <div className='cart-Actions'>
+            <div className='buynowItem'>
                 <Button
                     variant="contained"
                     color='success'
                     onClick={handeleMovetoCart}
                     fullWidth
                 >
-                    BUY NOW
+                    CheckOut
                 </Button>
             </div>
-                </div>:<div className='emptyicon'>
+                </div>:
+                <div className='emptyicon'>
             <img src="/images/emptycart.jpg" alt="emptywishlist" width={400} height={400} />
             <div className='info'>No Items Found in Cart</div>
             <div className='actionBtn'>                      

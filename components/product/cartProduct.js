@@ -3,9 +3,11 @@ import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { getProductById } from '../../services/productservices'
 import QuantityItem from './QuantityItem'
+import DeleteIcon from '@mui/icons-material/Delete';
 import { postCart, removefromCart } from '../../services/cartservice'
 const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
     const [productdetails, setDetails] = useState({});
+    const API_PATH='https://shop-products-api-1q6w.vercel.app'
     const [quantityNum, setQuantity] = useState(quantity);
     const [loading, setLoading] = useState(false)
     const [notify, setNotify] = useState(false)
@@ -85,20 +87,21 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
                 message={notifydata?.message}
                 key={'top' + 'right'}
             />
-            <div className='product-details'>
+                <div className='productInfo'>
                 <div className='cart-Image'>
                     <Avatar
                         sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
-                        src={'https://shop-products-api.vercel.app/' + productdetails?.productImg}
+                        src={`${API_PATH}/` + productdetails?.productImg}
                         variant="square"
                     />
                 </div>
                 <div className='cart-description'>
                     <div className='product-title'> {productdetails?.title}</div>
                     <div className='product-subTitle'>{productdetails?.subTitle}</div>
-                </div>
-                <div className='cart-price'>
+                    <div className='cart-price'>
                     RS.{productdetails?.price}
+                </div>
+                </div>
                 </div>
                 <QuantityItem
                     quantity={quantity}
@@ -106,29 +109,12 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
                     quantityNum={quantityNum}
                     setQuantity={setQuantity}
                 />
-            </div>
             <div className='cart-Actions'>
-                <div className='cart-update'>
-                    <Button
-                        variant="contained"
-                        color='success'
-                        onClick={updateCartHandler}
-                        fullWidth
-                    >
-                        Update
-                    </Button>
-                </div>
-                <div className='cart-remove'>
-                    <Button
-                        variant="contained"
-                        color='error'
+                    <DeleteIcon
                         onClick={removefromCartHandler}
-                        fullWidth
-                    >
-                        Remove
-                    </Button>
-                </div>
-
+                        color="error"
+                        className='errorIcon'
+                     />
             </div>
 
         </div>

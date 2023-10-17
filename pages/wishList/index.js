@@ -67,7 +67,8 @@ const WishList = () => {
                     <div className='image'><img src='/images/hearticon.svg' alt='heart' width={100} height={100} /></div>
                     <div className='title'>My wishlist({wishListItems?.length?wishListItems?.length:0})</div>
                 </div>
-                <div className='wishlistColums'>
+               <div className='tableContainer'>
+               <div className='wishlistColums'>
                 <div>Product Name</div>
                 <div>price</div>
                 <div>stock</div>
@@ -86,6 +87,7 @@ const WishList = () => {
                     />
                 ))}
             </div>
+               </div>
             </div>:
             <div className='emptyicon'>
             <img src="/images/emptywishlist.jpg" alt="emptywishlist" width={400} height={400} />
