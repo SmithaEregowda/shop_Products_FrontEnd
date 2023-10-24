@@ -1,4 +1,4 @@
-import { Avatar, Backdrop, Button, CircularProgress, Snackbar, Step, StepLabel, Stepper } from '@mui/material'
+import { Avatar, Step, StepLabel, Stepper } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import { getProductById } from '../../services/productservices';
 import cookieCutter from 'cookie-cutter'

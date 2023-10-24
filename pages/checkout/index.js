@@ -1,10 +1,14 @@
-import { Avatar, Backdrop, Button, CircularProgress, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Snackbar, TextField } from '@mui/material'
+/* eslint-disable react/no-unescaped-entities */
+import { Avatar, Backdrop, Button, CircularProgress, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Snackbar, Step, StepLabel, Stepper, TextField } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import OrderProducts from '../../components/product/OrderProducts';
+
 import cookieCutter from 'cookie-cutter'
 import { clearCart, getCartByUser } from '../../services/cartservice';
 import { postOrder } from '../../services/orderservide';
+import CheckoutProducts from '../../components/checkout/products';
+import ShippingInfo from '../../components/checkout/shippinginfo';
+import PaymentDetails from '../../components/checkout/payment';
 
 const CheckOut = () => {
   const router = useRouter();
@@ -16,6 +20,8 @@ const CheckOut = () => {
   const [notify, setNotify] = useState(false)
   const [notifydata, setMessage] = useState({})
   const [products, setProducts] = useState([]);
+  const [deliveryCharges]=useState(50)
+  const [activeStep,setActiveStep]=useState("shipinfo")
   useEffect(() => {
     let userId = cookieCutter.get('userId');
     const token = cookieCutter.get('token');
@@ -87,6 +93,7 @@ const CheckOut = () => {
       }
     })
   }
+
   return (
     <div className='checkout-details'>
       <Backdrop
@@ -106,11 +113,16 @@ const CheckOut = () => {
       />
       <div className='order-details'>
         <div className='product-summary'>
+          <div className='title'>Summary Order</div>
+          <div className='subTitle'>check you're Item and select you're shipping Item
+            for better<br /> experience order Item
+           </div>
+          <div className='checkoutProducts'>
           {!router.query.id ?
             <div>
               {cartItems && cartItems?.products?.length > 0
                 && cartItems.products.map(prod => (
-                  <OrderProducts
+                  <CheckoutProducts
                     key={prod.product}
                     prodId={prod.product}
                     quantity={prod?.quantity}
@@ -120,7 +132,7 @@ const CheckOut = () => {
                 ))}
             </div>
             :
-            <OrderProducts
+            <CheckoutProducts
               prodId={router.query.id}
               quantity={1}
               isfromcart={false}
@@ -128,10 +140,43 @@ const CheckOut = () => {
               handeleTotalPrice={handeleTotalPrice}
             />
           }
-
+          </div>
+          <div className='totalSummary'>
+            <div className='rowTotal'>
+              <div className='totalTitle'>Sub Total</div>
+              <div className='amount'>RS.{totalPrice}</div>
+            </div>
+            <div className='rowTotal'>
+              <div className='totalTitle'>Delivery Charges</div>
+              <div className='amount'>RS.{deliveryCharges}</div>
+            </div>
+            <div className='rowTotal'>
+              <div className='totalTitle'>Total</div>
+              <div className='amount'>RS.{totalPrice+deliveryCharges}</div>
+            </div>
+          </div>
         </div>
         <div className='ordersection'>
-          <div className='add-fileds'>
+          <Stepper
+             activeStep={activeStep}
+             alternativeLabel
+              >
+                 <Step key={"shipinfo"}>
+                     <StepLabel>Ship Info</StepLabel>
+                 </Step>
+                 <Step key={"payment"}>
+                     <StepLabel>Payment</StepLabel>
+                 </Step>      
+            </Stepper>
+            {
+              activeStep==="shipinfo"&&
+              <ShippingInfo />
+            }
+            {
+              activeStep==="payment"&&
+              <PaymentDetails />
+            }
+          {/* <div className='add-fileds'>
             <div className='input-field'>
               <TextField
                 id="outlined-basic"
@@ -174,10 +219,10 @@ const CheckOut = () => {
                 </RadioGroup>
               </FormControl>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
-      <div className='orderActions'>
+      {/* <div className='orderActions'>
         <Button
           variant="contained"
           color='success'
@@ -194,7 +239,7 @@ const CheckOut = () => {
         >
           Cancel
         </Button>
-      </div>
+      </div> */}
     </div>
   )
 }
