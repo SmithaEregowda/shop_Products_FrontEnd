@@ -14,7 +14,7 @@ const CheckOut = () => {
   const router = useRouter();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0)
-  const [Address, setShipAddress] = useState();
+  const [Address, setShipAddress] = useState({});
   const [PayMentMode, setPayMentMode] = useState("cash and delivery");
   const [loading, setLoading] = useState(false)
   const [notify, setNotify] = useState(false)
@@ -94,6 +94,10 @@ const CheckOut = () => {
     })
   }
 
+  const handelStep=(mode)=>[
+    setActiveStep(mode)
+  ]
+
   return (
     <div className='checkout-details'>
       <Backdrop
@@ -170,11 +174,22 @@ const CheckOut = () => {
             </Stepper>
             {
               activeStep==="shipinfo"&&
-              <ShippingInfo />
+              <ShippingInfo 
+              {...{
+                setShipAddress,
+                Address,
+                handelStep
+              }}
+              />
             }
             {
               activeStep==="payment"&&
-              <PaymentDetails />
+              <PaymentDetails 
+              {...{
+                handelStep,
+                orderHandler
+              }}
+              />
             }
           {/* <div className='add-fileds'>
             <div className='input-field'>
