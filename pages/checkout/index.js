@@ -15,7 +15,7 @@ const CheckOut = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0)
   const [Address, setShipAddress] = useState({});
-  const [PayMentMode, setPayMentMode] = useState("cash and delivery");
+  const [PayMentMode, setPayMentMode] = useState({});
   const [loading, setLoading] = useState(false)
   const [notify, setNotify] = useState(false)
   const [notifydata, setMessage] = useState({})
@@ -88,6 +88,7 @@ const CheckOut = () => {
         clearCart(userId, requestOptions).then(data => {
           setMessage(data)
           setNotify(true)
+          router.push("/orders")
           setLoading(false)
         })
       }
@@ -161,17 +162,29 @@ const CheckOut = () => {
           </div>
         </div>
         <div className='ordersection'>
-          <Stepper
-             activeStep={activeStep}
-             alternativeLabel
-              >
-                 <Step key={"shipinfo"}>
-                     <StepLabel>Ship Info</StepLabel>
-                 </Step>
-                 <Step key={"payment"}>
-                     <StepLabel>Payment</StepLabel>
-                 </Step>      
-            </Stepper>
+            <div className='stepper'>
+                <Stepper
+                activeStep={activeStep}
+                sx={{
+                  "& .MuiStepConnector-line": {
+                    borderTopWidth: "4px",
+                  },
+                  "& .MuiStepConnector-root.Mui-active .MuiStepConnector-line": {
+                    borderColor: "red",
+                  },
+                  "& .MuiStepConnector-root.Mui-completed .MuiStepConnector-line": {
+                    borderColor: "green",
+                  },
+              }}
+                  >
+                      <Step key={"shipinfo"}>
+                        <StepLabel>Ship Info</StepLabel>
+                    </Step>
+                    <Step key={"payment"}>
+                        <StepLabel>Payment</StepLabel>
+                    </Step>      
+                  </Stepper>
+            </div>
             {
               activeStep==="shipinfo"&&
               <ShippingInfo 
@@ -187,7 +200,9 @@ const CheckOut = () => {
               <PaymentDetails 
               {...{
                 handelStep,
-                orderHandler
+                orderHandler,
+                setPayMentMode,
+                PayMentMode
               }}
               />
             }

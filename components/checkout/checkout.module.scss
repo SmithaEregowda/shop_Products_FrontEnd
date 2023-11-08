@@ -35,3 +35,16 @@
         transition: 5s all;
     }
 }
+
+.paymentWrapper{
+    padding: 2rem;
+    .payOptions{
+        min-height: 3.5rem;
+    }
+    .paymentAction{
+        padding: 1rem 0;
+        .payBtn{
+            margin: 0 1rem 0 0;
+        }
+    }
+}

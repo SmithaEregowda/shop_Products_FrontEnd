@@ -1,8 +1,9 @@
 import React from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import cookieCutter from 'cookie-cutter'
-import { postPayment } from "../services/orderservide";
+import { postPayment } from "../../services/orderservide";
 import { Button } from "@mui/material";
+import styles from './cardpay.module.scss'
 
 export const CheckoutForm = () => {
   const stripe = useStripe();
@@ -42,17 +43,17 @@ export const CheckoutForm = () => {
   };
 
   return (
-    <div className="payMent">
+    <div className={styles.paymentWrapper}>
       <form onSubmit={handleSubmit} style={{ maxWidth: 400 }}>
         <CardElement />
-        <button 
+        <Button 
         variant="outlined"
-         className="payBtn"
+         className={styles.payBtn}
          color="success"
 
          >
           PAY
-          </button>
+          </Button>
       </form>
     </div>
   );
