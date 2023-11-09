@@ -11,12 +11,14 @@ const OrderProducts =
         isfromcart,
         handeleTotalPrice,
         isfromOrders,
-        isDeliverd
+        isDeliverd,
+        address
     }) => {
         const [productdetails, setDetails] = useState({});
         const router = useRouter();
         const [productPrice, setProductPrice] = useState()
         let steps = ["Ordered", "Shipped", "Delivered"];
+        const API_PATH='https://shop-products-api-1q6w.vercel.app'
         useEffect(() => {
             const token = cookieCutter.get('token');
             const requestOptions = {
@@ -37,20 +39,22 @@ const OrderProducts =
 
         return (
             <div className='cart-Item'>
-
-                <div className='product-details'>
                     <div className='cart-Image'>
                         <Avatar
                             sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
-                            src={'https://shop-products-api.vercel.app/' + productdetails?.productImg}
+                            src={`${API_PATH}/` + productdetails?.productImg}
                             variant="square"
                         />
                     </div>
                     <div className='cart-description'>
                         <div className='product-title'> {productdetails?.title}</div>
                         <div className='product-subTitle'>{productdetails?.subTitle}</div>
-                        <div>
-                        {
+                        <div className='product-subTitle'>
+                            RS.{productdetails?.price}
+                        </div>
+                    </div>
+                    <div className='cartStep'>
+                    {
                 isDeliverd!="Canceled"?
                             <Stepper
                                 activeStep={steps.findIndex(item => item === isDeliverd)}
@@ -62,37 +66,19 @@ const OrderProducts =
                                     </Step>
                                 ))}
                             </Stepper>:
-             <Stepper
-             activeStep={["Ordered","Canceled"].findIndex(item => item === isDeliverd)}
-             alternativeLabel
-              >
-                 <Step key={"Ordered"}>
-                     <StepLabel>Ordered</StepLabel>
-                 </Step>
-                 <Step key={"Canceled"}>
-                     <StepLabel error={true}>Canceled</StepLabel>
-                 </Step>      
-            </Stepper>
-              }
-                        </div>
-                    </div>
-
-                    {!isfromOrders &&
-                        <div className='cart-price'>
-                            RS.{productdetails?.price}&nbsp;&nbsp;*
-                        </div>
-                    }
-                    {!isfromOrders &&
-                        <div className='cart-price'>
-                            {quantity}&nbsp;&nbsp;=
-                        </div>
-                    }
-                    {!isfromOrders &&
-                        <div className='cart-price'>
-                            RS.{productPrice}
-                        </div>
-                    }
-                </div>
+                            <Stepper
+                            activeStep={["Ordered","Canceled"].findIndex(item => item === isDeliverd)}
+                            alternativeLabel
+                            >
+                                <Step key={"Ordered"}>
+                                    <StepLabel>Ordered</StepLabel>
+                                </Step>
+                                <Step key={"Canceled"}>
+                                    <StepLabel error={true}>Canceled</StepLabel>
+                                </Step>      
+                            </Stepper>
+                        }
+                    </div>        
             </div>
         )
     }

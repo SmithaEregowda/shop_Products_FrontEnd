@@ -1,54 +1,48 @@
 .orders{
-    height: 35rem;
-    overflow: auto;
     .order-Item{
         padding: 1rem;
-        display: grid;
-        grid-template-columns: auto auto auto;
-        box-shadow: 5px 5px 5px 5px #e1dcdc !important;
-        background: white;
-        width: 70%;
-        margin: 1rem;
+        max-height: calc(100vh - 6rem);
+        min-height: calc(100vh - 6rem);
+        overflow: auto;
         justify-content: center;
+        background-color: #e7e7e7;
         div{
             //display: grid;
             justify-content: center;
             align-items: center; 
-            margin-right: 1rem;  
         }
         .ordered-products{
             .cart-Item{
                 display: grid;
-                justify-content: center;
-                // &:hover{
-                //     box-shadow: 5px 5px 5px 5px #888888 !important;
-                // }
-                .product-details{
+                grid-gap: 1rem;
+                grid-template-columns: 9rem 7rem 1fr;
+                border: 1px solid #dbdbdb;
+                margin: 1rem 0 0;
+                background: #fff;
+                cursor: pointer;
+                .cart-Image{
                     display: grid;
                     justify-content: center;
-                    align-items: center;
-                    .cart-Image{
+                    padding: 0.5rem;
+                }
+                .cart-description{    
+                    .product-title{
                         display: grid;
                         justify-content: center;
+                        font-weight: 600;
+                        text-transform: uppercase; 
                     }
-                    .cart-description{
-                        margin: 0 0.5rem;
-                        width: 20rem;
-                        .product-title{
-                            display: grid;
-                            justify-content: center;
-                            font-weight: 600;
-                            text-transform: uppercase; 
-                        }
-                        .product-subTitle{
-                            display: grid;
-                            justify-content: center;
-                            font-weight: 300;
-                            color: #888888;
-                            margin: 0 0.2rem;
-                        }
+                    .product-subTitle{
+                        display: grid;
+                        justify-content: center;
+                        font-weight: 300;
+                        color: #888888;
+                        margin: 0 0.2rem;
                     }
-                   
+                }
+                &:hover{
+                    // background-color: #d9f5de;
+                    box-shadow: 0 1px 12px 2px #dbdbdb;
                 }
             }
         }
