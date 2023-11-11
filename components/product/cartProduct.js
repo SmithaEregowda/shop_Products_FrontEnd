@@ -26,12 +26,12 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [prodId]);
 
-    const updateCartHandler = () => {
+    const updateCartHandler = (qty) => {
         let userId = cookieCutter.get('userId');
         const payload = {
             userId: userId,
             prodId: prodId,
-            quantity: quantityNum
+            quantity: qty
         }
         const token = cookieCutter.get('token');
         const requestOptions = {
@@ -45,7 +45,6 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
         postCart(requestOptions).then((data) => {
             setMessage(data)
             setNotify(true)
-            getCartByUserId(token, userId)
             setLoading(false)
             //router.reload('/cart')
         })
@@ -70,6 +69,7 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
                 //router.reload('/cart')
             })
     }
+    
     return (
         <div className='cart-Item'>
             <Backdrop
@@ -108,6 +108,7 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
                     price={productdetails?.price}
                     quantityNum={quantityNum}
                     setQuantity={setQuantity}
+                    updateCartHandler={updateCartHandler}
                 />
             <div className='cart-Actions'>
                     <DeleteIcon

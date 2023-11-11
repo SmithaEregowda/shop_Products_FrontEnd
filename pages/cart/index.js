@@ -18,6 +18,7 @@ const Cart = () => {
         const token = cookieCutter.get('token');
         getCartByUserId(token, userId)
     }, [])
+    
     const getCartByUserId = (token, user) => {
         const requestOptions = {
             method: 'GET',
@@ -39,7 +40,7 @@ const Cart = () => {
             }
         })
     }
-    console.log(cartItems)
+
     return (
         <div className='cart-details'>
             <Backdrop
@@ -69,20 +70,18 @@ const Cart = () => {
             </div>}
 
             {cartItems?.products?.length>0?
-            <div>
-                <div className='cart-Items'>
-                {
-                    cartItems && cartItems?.products?.length > 0
-                    && cartItems.products.map(prod => (
-                        <CartProduct
-                            key={prod.product}
-                            prodId={prod.product}
-                            quantity={prod?.quantity}
-                            getCartByUserId={getCartByUserId}
-                        />
-                    ))
-
-                }
+                <div>
+                    <div className='cart-Items'>
+                        {
+                        cartItems && cartItems?.products?.length > 0
+                        && cartItems.products.map(prod => (
+                            <CartProduct
+                                key={prod.product}
+                                prodId={prod.product}
+                                quantity={prod?.quantity}
+                                getCartByUserId={getCartByUserId}
+                            />
+                        ))}
             </div>
             <div className='buynowItem'>
                 <Button
@@ -96,10 +95,10 @@ const Cart = () => {
             </div>
                 </div>:
                 <div className='emptyicon'>
-            <img src="/images/emptycart.jpg" alt="emptywishlist" width={400} height={400} />
-            <div className='info'>No Items Found in Cart</div>
-            <div className='actionBtn'>                      
-                <Button
+                    <img src="/images/emptycart.jpg" alt="emptywishlist" width={400} height={400} />
+                    <div className='info'>No Items Found in Cart</div>
+                    <div className='actionBtn'>                      
+                        <Button
                         variant="contained"
                         color='success'
                         onClick={() => router.push({
@@ -110,7 +109,8 @@ const Cart = () => {
                         Add to Cart
                       </Button>
                       </div>
-            </div>}
+                </div>
+            }
             
         </div>
     )

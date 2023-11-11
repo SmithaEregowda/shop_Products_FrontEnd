@@ -2,16 +2,23 @@ import React, { useState } from 'react'
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import DragHandleIcon from '@mui/icons-material/DragHandle';
 import IndeterminateCheckBoxOutlinedIcon from '@mui/icons-material/IndeterminateCheckBoxOutlined';
-const QuantityItem = ({ quantityNum,setQuantity ,price}) => {
+const QuantityItem = ({
+    quantityNum,
+    setQuantity,
+    price,
+    updateCartHandler
+}) => {
  
     const quantityHandler = (mode) => {
        if(mode==="add"){
        if(!(quantityNum>9)){
         setQuantity(quantityNum+1)
+        updateCartHandler(quantityNum+1)
        }
        }else{
         if(quantityNum>1){
             setQuantity(quantityNum-1)
+            updateCartHandler(quantityNum-1)
         }
        }
     }
