@@ -114,7 +114,7 @@ const UserData = ({ user }) => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleProfile}>Profile</MenuItem>
+        {/* <MenuItem onClick={handleProfile}>Profile</MenuItem> */}
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
       <Dialog 

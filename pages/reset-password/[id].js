@@ -1,6 +1,6 @@
 import { Button, CircularProgress, Snackbar, TextField } from '@mui/material'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { resetPassword } from '../../services/usersevice'
 const ResetPassword = () => {
@@ -34,15 +34,13 @@ const ResetPassword = () => {
     resetPassword(requestOptions,id).then(data => {
       setLoading(false)
       setMessage(data)
-      if (data?.token && data?.user) {
-        handleUser(data?.user)
-        setOpenModal(false)
-        cookieCutter.set('token', data?.token)
-        cookieCutter.set('userId', data?.user)
-        router.push('/')
+      if(data?.message==="password reseted  successfully"){
+        router.push('/index');
       }
     })
   }
+  
+
   return (
     <div className='reser-password'>
       {loading && <CircularProgress />}

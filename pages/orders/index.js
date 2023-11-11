@@ -1,7 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { getOrdersByUser } from '../../services/orderservide';
 import OrderProducts from '../../components/product/OrderProducts';
+import { Button } from '@mui/material';
 
 const Orders = () => {
   const [orders, setOrderItems] = useState();
@@ -24,12 +26,11 @@ const Orders = () => {
   return (
     <div className='orders'>
       {orders && orders.length > 0
-        && orders.map(order => (
+        ?orders.map(order => (
           <div key={order._id}
             className='order-Item'>
-              {console.log(order)}
             <div className='ordered-products'>
-              {order && order.products.length > 0 &&
+              {order && order?.products?.length > 0 &&
                 order.products.map(prod => (
                   <OrderProducts
                     key={prod._id}
@@ -38,10 +39,27 @@ const Orders = () => {
                     isDeliverd={prod?.isDeliverd}
                     address={order?.address}
                   />
-                ))}
+                ))
+                }
             </div>
           </div>
-        ))}
+        )):
+        <div className='emptyicon'>
+        <img src="/images/noorder.png" alt="emptywishlist" width={400} height={400} />
+        <div className='info'>No Order Placed Yet</div>
+        <div className='actionBtn'>                      
+            <Button
+                    variant="contained"
+                    color='success'
+                    onClick={() => router.push({
+                      pathname: '/'
+                    })}
+                    fullWidth
+                  >
+                    Return Home
+                  </Button>
+                  </div>
+        </div>}
     </div>
   )
 }
