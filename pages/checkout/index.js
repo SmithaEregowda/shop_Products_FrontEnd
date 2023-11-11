@@ -56,11 +56,11 @@ const CheckOut = () => {
       userId,
       prodId: router.query.id ? router.query.id : products,
       products,
-      Address,
       PayMentMode,
       totalPrice,
       //isDeliverd: false,
-      isfromcart: router.query.id ? false : true
+      isfromcart: router.query.id ? false : true,
+      ...Address
     }
     const requestOptions = {
       method: 'Post',
@@ -164,7 +164,7 @@ const CheckOut = () => {
         <div className='ordersection'>
             <div className='stepper'>
                 <Stepper
-                activeStep={activeStep}
+                activeStep={["shipinfo","payment"]?.findIndex((item)=>item===activeStep)}
                 sx={{
                   "& .MuiStepConnector-line": {
                     borderTopWidth: "4px",

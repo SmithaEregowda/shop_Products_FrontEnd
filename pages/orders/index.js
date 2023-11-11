@@ -27,6 +27,7 @@ const Orders = () => {
         && orders.map(order => (
           <div key={order._id}
             className='order-Item'>
+              {console.log(order)}
             <div className='ordered-products'>
               {order && order.products.length > 0 &&
                 order.products.map(prod => (
@@ -35,15 +36,10 @@ const Orders = () => {
                     prodId={prod._id}
                     isfromOrders={true}
                     isDeliverd={prod?.isDeliverd}
-                    address={order?.Address}
+                    address={order?.address}
                   />
                 ))}
             </div>
-            {/* <div>
-              Address  &nbsp; : &nbsp; &nbsp;{order?.Address}<br /><br />
-              Price &nbsp; : &nbsp; &nbsp;{order?.totalPrice}<br /><br />
-              payment mode &nbsp; : &nbsp; &nbsp;{order?.PayMentMode}
-            </div> */}
           </div>
         ))}
     </div>

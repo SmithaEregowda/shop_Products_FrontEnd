@@ -179,7 +179,7 @@ const HomePage = () => {
     }
   }
 
- const checkoutHandler=()=>{
+ const checkoutHandler=(prod)=>{
   const token = cookieCutter.get('token');
  if(token){
   router.push({
@@ -300,7 +300,7 @@ const HomePage = () => {
                   <Button
                     variant="contained"
                     color='error'
-                    onClick={checkoutHandler}
+                    onClick={()=>checkoutHandler(prod)}
                     fullWidth
                   >
                     BUY NOW
