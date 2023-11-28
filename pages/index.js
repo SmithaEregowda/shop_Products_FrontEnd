@@ -10,6 +10,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { getwishlistByUser, postWishList } from '../services/wishlistsevice';
 import Footersection from '../components/footer/footersection';
 import CarouselComponent from '../components/carousel';
+import Loader from '../components/loader';
 
 
 const HomePage = () => {
@@ -23,9 +24,11 @@ const HomePage = () => {
   const [notify, setNotify] = useState(false)
   const [notifydata, setMessage] = useState({})
   const router = useRouter();
-  const API_PATH='https://shop-products-api-1q6w.vercel.app'
+  const API_PATH='https://shop-products-api-1q6w.vercel.app';
+  const [pageno,setPageNo]=useState(1)
 
   useEffect(() => {
+    setLoading(true)
     setuserId(cookieCutter.get('userId'))
     const token = cookieCutter.get('token')
     if(userData?.userType === "internal user" ){
@@ -39,11 +42,17 @@ const HomePage = () => {
     const requestOptions = {
       method: 'GET',
     };
+    let query={
+      limit:10,
+      pageNo:1
+    }
+    setPageNo(1)
 
-    getAllProducts(requestOptions)
+    getAllProducts(requestOptions,query)
       .then(data => {
         setProducts(data?.products)
         setPagination(data?.pagination)
+        setLoading(false)
       })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,17 +74,25 @@ const HomePage = () => {
       })
   }
 
-  const getAllProductsAfterDelete = (token) => {
+  const getAllProductsAfterDelete = (token,page) => {
+    setLoading(true)
     const requestOptions = {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`
       },
     };
-    getAllProducts(requestOptions)
+    let pageNo=page?page:1;
+    setPageNo(pageNo)
+    let query={
+      limit:10,
+      pageNo:pageNo
+    }
+    getAllProducts(requestOptions,query)
       .then(data => {
         setProducts(data?.products)
         setPagination(data?.pagination)
+        setLoading(false)
       })
   }
 
@@ -117,6 +134,7 @@ const HomePage = () => {
   }
 
   const handleAddToCart = (prodId) => {
+    setLoading(true)
     const token = cookieCutter.get('token');
     if(token){
       const payload = {
@@ -144,11 +162,13 @@ const HomePage = () => {
         message:"please try to login"
       })
         setNotify(true)
+        setLoading(false)
     }
     
   }
 
   const addtoWishListHandler = (prodId) => {
+    setLoading(true)
     const token = cookieCutter.get('token');
     if(token){
       const payload = {
@@ -176,6 +196,7 @@ const HomePage = () => {
         message:"please try to login"
       })
       setNotify(true)
+      setLoading(false)
     }
   }
 
@@ -194,16 +215,18 @@ const HomePage = () => {
 }
  }
 
+ const onChangePage=(event,page)=>{
+  console.log(page)
+  setPageNo(page)
+  const token = cookieCutter.get('token')
+  getAllProductsAfterDelete(token,page);
+ }
+
   return (
   <div>
+    <Loader loading={loading} />
       <CarouselComponent />
       <div className='products-details'>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={notify}
@@ -316,8 +339,9 @@ const HomePage = () => {
       <div className='pagination'>
         {pagination &&
           <Pagination
-            count={parseInt(pagination?.totalCount / pagination?.limit)}
-            page={1}
+            count={Math.ceil(pagination?.totalCount / pagination?.limit)}
+            page={pageno}
+            onChange={onChangePage}
             color='primary'
           />}
       </div>

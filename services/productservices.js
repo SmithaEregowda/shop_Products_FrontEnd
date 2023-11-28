@@ -3,8 +3,8 @@ let API_PATH=''
 if(process.env.NODE_ENV==="production"){
     API_PATH='https://shop-products-api-1q6w.vercel.app'
 }
-export  function getAllProducts(requestOptions) {
-    const data =fetch(`${API_PATH}/api/products?limit=20`,requestOptions)
+export  function getAllProducts(requestOptions,query) {
+    const data =fetch(`${API_PATH}/api/products?limit=${query?.limit}&pageNo=${query?.pageNo}`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )

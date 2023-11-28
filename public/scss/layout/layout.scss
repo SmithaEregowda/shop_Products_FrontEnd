@@ -1,27 +1,42 @@
 .layout{
   width: 100%;
-  .layoutwraaper{
+
+  .layoutWrapper{
     border-radius: 0 !important;
     background-color: #fff;
-    max-height: 4rem;
     padding: 0.5rem 0;
     box-shadow: 0px 2px 1px -1px
      rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%),
       0px 1px 3px 0px rgb(0 0 0 / 12%);
-      display: grid;
-      grid-template-columns: 15rem 1fr 10rem;
+      display: flex;
+      justify-content: space-between;
       cursor: pointer;
-      .layout-items{
-        display: grid;
-        grid-auto-flow: column;
-        width: 100%;
-        overflow: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 3;
+
+      .navIcon{
+        display: none;
       }
-      .signup-items{
-        display: grid;
-        padding: 0 0.5rem;
-        justify-content: flex-end;
+
+      .leftItems{
+        display: flex;
+        justify-content: space-between;
+        flex:1;
+        .layout-items{
+          display: grid;
+          grid-auto-flow: column;
+          width: 100%;
+          overflow: auto;
+          justify-content: center;
+        }
+        .signup-items{
+          display: grid;
+        }
       }
+
       .title{
         font-weight: bolder;
         font-size: 1.7rem;
@@ -30,5 +45,50 @@
         display: grid;
         padding: 0 0.5rem;
        }
+  }
+}
+
+.sleep{
+  display: none;
+  transition: .3s all ease-out;
+}
+
+.scrolled{
+  position: fixed !important;
+  transition: .3s all ease-out;
+  background: #000;
+}
+@media only screen and (max-width:775px){
+  .blackBg{
+      background: #000 !important;
+  }
+}
+
+@media only screen and (max-width:550px){
+  .layoutWrapper{
+    display: flex !important;
+   
+  }
+  .leftItems{
+    display: none !important;
+  }
+
+  .leftItemsgrid{
+    display: grid !important;
+    margin: 0;
+    position: absolute;
+    top: 4rem;
+    background: white;
+    width: 100%;
+    .layout-items{
+      display: grid !important;
+      grid-auto-flow: row !important;
+      grid-gap: 1rem;
+      padding: 1rem !important;
+    }
+  }
+
+  .navIcon{
+    display: grid !important;
   }
 }
