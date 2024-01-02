@@ -7,11 +7,11 @@ import { useRouter } from 'next/router';
 import { removefromwishlist } from '../../services/wishlistsevice';
 import styles from './wishlist.module.scss'
 
-const WishListProduct = ({ prodId, cartItems, setLoading, setNotify,
-    setMessage, getWishListByUserId }) => {
+const WishListProduct = ({ prodId, cartItems, setLoading, getWishListByUserId ,enqueueSnackbar}) => {
         const API_PATH='https://shop-products-api-1q6w.vercel.app'
     const [productdetails, setDetails] = useState({});
     const router = useRouter();
+
     useEffect(() => {
         const token = cookieCutter.get('token');
         const requestOptions = {
@@ -27,6 +27,7 @@ const WishListProduct = ({ prodId, cartItems, setLoading, setNotify,
     }, [prodId]);
 
     const handleAddToCart = (prodId) => {
+        setLoading(true)
         const payload = {
             userId: cookieCutter.get('userId'),
             prodId: prodId
@@ -42,13 +43,15 @@ const WishListProduct = ({ prodId, cartItems, setLoading, setNotify,
         };
 
         postCart(requestOptions).then((data) => {
-            setMessage(data)
-            setNotify(true)
+            enqueueSnackbar(data?.message, 
+                { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             setLoading(false)
             router.reload('/wishlist')
         })
     }
+
     const handledelete = (prodId) => {
+        setLoading(true)
         let userId = cookieCutter.get('userId');
         const token = cookieCutter.get('token');
         const requestOptions = {
@@ -59,8 +62,8 @@ const WishListProduct = ({ prodId, cartItems, setLoading, setNotify,
         };
         removefromwishlist(userId, prodId, requestOptions)
             .then((data) => {
-                setMessage(data)
-                setNotify(true)
+                enqueueSnackbar(data?.message, 
+                    { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
                 getWishListByUserId(token, userId)
                 setLoading(false)
                 //router.reload('/cart')

@@ -1,17 +1,15 @@
-import { Avatar, Backdrop, Button, CircularProgress, Snackbar } from '@mui/material'
+import { Avatar } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { getProductById } from '../../services/productservices'
 import QuantityItem from './QuantityItem'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { postCart, removefromCart } from '../../services/cartservice'
-const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
+const CartProduct = ({ prodId, quantity, getCartByUserId ,setLoading,enqueueSnackbar}) => {
     const [productdetails, setDetails] = useState({});
     const API_PATH='https://shop-products-api-1q6w.vercel.app'
     const [quantityNum, setQuantity] = useState(quantity);
-    const [loading, setLoading] = useState(false)
-    const [notify, setNotify] = useState(false)
-    const [notifydata, setMessage] = useState({})
+
     useEffect(() => {
         const token = cookieCutter.get('token');
         const requestOptions = {
@@ -27,6 +25,7 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
     }, [prodId]);
 
     const updateCartHandler = (qty) => {
+        setLoading(true)
         let userId = cookieCutter.get('userId');
         const payload = {
             userId: userId,
@@ -43,8 +42,8 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
             body: JSON.stringify(payload)
         };
         postCart(requestOptions).then((data) => {
-            setMessage(data)
-            setNotify(true)
+            enqueueSnackbar(data?.message, 
+                { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             setLoading(false)
             //router.reload('/cart')
         })
@@ -52,6 +51,7 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
     }
 
     const removefromCartHandler = () => {
+        setLoading(true)
         let userId = cookieCutter.get('userId');
         const token = cookieCutter.get('token');
         const requestOptions = {
@@ -62,8 +62,8 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
         };
         removefromCart(userId, prodId, requestOptions)
             .then((data) => {
-                setMessage(data)
-                setNotify(true)
+                enqueueSnackbar(data?.message, 
+                    { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
                 getCartByUserId(token, userId)
                 setLoading(false)
                 //router.reload('/cart')
@@ -72,21 +72,6 @@ const CartProduct = ({ prodId, quantity, getCartByUserId }) => {
     
     return (
         <div className='cart-Item'>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={loading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={notify}
-                autoHideDuration={2000}
-                onClose={() => setNotify(false)}
-                severity="success"
-                message={notifydata?.message}
-                key={'top' + 'right'}
-            />
                 <div className='productInfo'>
                 <div className='cart-Image'>
                     <Avatar

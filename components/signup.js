@@ -1,25 +1,26 @@
 import React, { useState } from 'react'
-import { Backdrop, Button, CircularProgress, Snackbar, TextField } from '@mui/material'
+import {  Button, TextField } from '@mui/material'
 import { signup } from '../services/usersevice'
+import { useSnackbar } from 'notistack'
+import Loader from './loader'
 const SignUp = ({ setLogin, setOpenModal, createinternalusers }) => {
     const [signupObj, setSignupObj] = useState({})
     const [loading, setLoading] = useState(false)
-    const [notify, setNotify] = useState(false)
-    const [notifydata, setMessage] = useState({})
+    const { enqueueSnackbar } = useSnackbar();
     const updateuserInput = (e) => {
         setSignupObj({ ...signupObj, [e.target.name]: e.target.value })
     }
     const handleForm = () => {
         setLoading(true)
-        setNotify(true)
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(signupObj)
         };
         signup(requestOptions).then(data => {
-            setMessage(data)
             setLoading(false)
+                enqueueSnackbar(data?.message, 
+                { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             if (data?.user && setLogin) {
                 setLogin(true)
             }
@@ -28,21 +29,7 @@ const SignUp = ({ setLogin, setOpenModal, createinternalusers }) => {
     }
     return (
         <div className='form-Item'>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={loading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={notify}
-                autoHideDuration={2000}
-                onClose={() => setNotify(false)}
-                severity="success"
-                message={notifydata?.message}
-                key={'top' + 'right'}
-            />
+            <Loader loading={loading} />
             <div className='input-items'>
                 <div className='input-field'>
                     <TextField

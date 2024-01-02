@@ -9,6 +9,8 @@ import { postOrder } from '../../services/orderservide';
 import CheckoutProducts from '../../components/checkout/products';
 import ShippingInfo from '../../components/checkout/shippinginfo';
 import PaymentDetails from '../../components/checkout/payment';
+import Loader from '../../components/loader';
+import { useSnackbar } from 'notistack';
 
 const CheckOut = () => {
   const router = useRouter();
@@ -17,12 +19,13 @@ const CheckOut = () => {
   const [Address, setShipAddress] = useState({});
   const [PayMentMode, setPayMentMode] = useState({});
   const [loading, setLoading] = useState(false)
-  const [notify, setNotify] = useState(false)
-  const [notifydata, setMessage] = useState({})
   const [products, setProducts] = useState([]);
   const [deliveryCharges]=useState(50)
-  const [activeStep,setActiveStep]=useState("shipinfo")
+  const [activeStep,setActiveStep]=useState("shipinfo");
+  const { enqueueSnackbar } = useSnackbar();
+
   useEffect(() => {
+    setLoading(true)
     let userId = cookieCutter.get('userId');
     const token = cookieCutter.get('token');
     if (!router.query.id) {
@@ -38,7 +41,10 @@ const CheckOut = () => {
           return prod?.product
         });
         setProducts(productes)
+        setLoading(false)
       })
+    }else{
+      setLoading(false)
     }
   }, [router.query.id]);
 
@@ -72,9 +78,8 @@ const CheckOut = () => {
     }
 
     postOrder(requestOptions).then((data) => {
-      setMessage(data)
-      setNotify(true)
-      setLoading(false)
+      enqueueSnackbar(data?.message, 
+        { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
       if (!router.query.id && data?.orderDetails) {
         let userId = cookieCutter.get('userId');
         const token = cookieCutter.get('token');
@@ -86,8 +91,6 @@ const CheckOut = () => {
           },
         }
         clearCart(userId, requestOptions).then(data => {
-          setMessage(data)
-          setNotify(true)
           router.push("/orders")
           setLoading(false)
         })
@@ -101,21 +104,7 @@ const CheckOut = () => {
 
   return (
     <div className='checkout-details'>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={notify}
-        autoHideDuration={2000}
-        onClose={() => setNotify(false)}
-        severity="success"
-        message={notifydata?.message}
-        key={'top' + 'right'}
-      />
+      <Loader loading={loading} />
       <div className='order-details'>
         <div className='product-summary'>
           <div className='title'>Summary Order</div>

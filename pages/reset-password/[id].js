@@ -1,23 +1,21 @@
-import { Button, CircularProgress, Snackbar, TextField } from '@mui/material'
+import { Button,  TextField } from '@mui/material'
 import { useRouter } from 'next/router'
 import React, {  useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { resetPassword } from '../../services/usersevice'
+import Loader from '../../components/loader'
+import { useSnackbar } from 'notistack'
 const ResetPassword = () => {
   const router = useRouter()
   const [curPassword, setCurrent] = useState('')
   const [newPassword, setNew] = useState('')
   const [cnfPassword, setConfirm] = useState('')
   const [loading, setLoading] = useState(false)
-  const [notify, setNotify] = useState(false)
-  const [notifydata, setMessage] = useState({})
-  const { id } = router.query
+  const { id } = router.query;
+  const { enqueueSnackbar } = useSnackbar();
   const handleReset = () => {
-    setLoading(true)
-    setNotify(true)
     if (newPassword !== cnfPassword) {
       setLoading(false)
-      setNotify(false)
       alert('password does not match');
       return;
     }
@@ -32,8 +30,9 @@ const ResetPassword = () => {
       body: JSON.stringify(data)
     };
     resetPassword(requestOptions,id).then(data => {
+      enqueueSnackbar(data?.message, 
+        { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
       setLoading(false)
-      setMessage(data)
       if(data?.message==="password reseted  successfully"){
         router.push('/index');
       }
@@ -43,16 +42,7 @@ const ResetPassword = () => {
 
   return (
     <div className='reser-password'>
-      {loading && <CircularProgress />}
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={notify}
-        autoHideDuration={3000}
-        onClose={() => setNotify(false)}
-        severity="success"
-        message={notifydata?.message}
-        key={'top' + 'right'}
-      />
+      <Loader loading={loading} />
       <div className='input-items'>
         <div className='input-field'>
           <TextField

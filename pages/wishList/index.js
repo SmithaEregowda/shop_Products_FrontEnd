@@ -7,20 +7,25 @@ import WishListProduct from '../../components/wishlist/WishListProduct'
 import { getCartByUser } from '../../services/cartservice';
 import { Image } from '@mui/icons-material'
 import { useRouter } from 'next/router';
+import Loader from '../../components/loader'
+import { useSnackbar } from 'notistack'
 const WishList = () => {
     const [wishListItems, setWishListItems] = useState([]);
     const [cartItems, setCartItems] = useState([])
     const [loading, setLoading] = useState(false)
-    const [notify, setNotify] = useState(false)
     const router = useRouter();
-    const [notifydata, setMessage] = useState({})
+    const { enqueueSnackbar } = useSnackbar();
+
     useEffect(() => {
         const token = cookieCutter.get('token')
         const userId = cookieCutter.get('userId')
         getWishListByUserId(token, userId);
         getCartByUserId(token, userId);
     }, [])
+
+
     const getWishListByUserId = (token, user) => {
+        setLoading(true)
         const requestOptions = {
             method: 'GET',
             headers: {
@@ -28,7 +33,8 @@ const WishList = () => {
             },
         };
         getwishlistByUser(user, requestOptions).then((data) => {
-            setWishListItems(data?.wishlist?.products)
+            setWishListItems(data?.wishlist?.products);
+            setLoading(false)
         })
     }
    
@@ -46,21 +52,7 @@ const WishList = () => {
 
     return (
         <div className='products-details'>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={loading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={notify}
-                autoHideDuration={2000}
-                onClose={() => setNotify(false)}
-                severity="success"
-                message={notifydata?.message}
-                key={'top' + 'right'}
-            />
+            <Loader loading={loading} />
             {wishListItems?.length>0 ?
             <div className="wishlistWrapper">
                 <div className='titleConatiner'>
@@ -81,9 +73,8 @@ const WishList = () => {
                         prodId={prod?.productId}
                         cartItems={cartItems}
                         setLoading={setLoading}
-                        setNotify={setNotify}
-                        setMessage={setMessage}
                         getWishListByUserId={getWishListByUserId}
+                        enqueueSnackbar={enqueueSnackbar}
                     />
                 ))}
             </div>

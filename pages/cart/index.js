@@ -2,17 +2,18 @@
 import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
 import { getCartByUser } from '../../services/cartservice';
-import { Avatar, Backdrop, Button, CircularProgress, Pagination, Snackbar } from '@mui/material';
-import { getProductById } from '../../services/productservices';
+import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CartProduct from '../../components/product/cartProduct';
+import Loader from '../../components/loader';
+import { useSnackbar } from 'notistack';
 const Cart = () => {
     const [cartItems, setCartItems] = useState([])
     const [loading, setLoading] = useState(false)
-    const [notify, setNotify] = useState(false)
-    const [notifydata, setMessage] = useState({})
     const router = useRouter();
+    const { enqueueSnackbar } = useSnackbar();
+
     useEffect(() => {
         let userId = cookieCutter.get('userId');
         const token = cookieCutter.get('token');
@@ -20,6 +21,7 @@ const Cart = () => {
     }, [])
     
     const getCartByUserId = (token, user) => {
+        setLoading(true)
         const requestOptions = {
             method: 'GET',
             headers: {
@@ -29,6 +31,7 @@ const Cart = () => {
         getCartByUser(user, requestOptions).then((data) => {
             let products = data?.cart?.products;
             setCartItems(data?.cart)
+            setLoading(false)
         })
     }
 
@@ -43,22 +46,7 @@ const Cart = () => {
 
     return (
         <div className='cart-details'>
-            <Backdrop
-                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={loading}
-            >
-                <CircularProgress color="inherit" />
-            </Backdrop>
-            <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={notify}
-                autoHideDuration={2000}
-                onClose={() => setNotify(false)}
-                severity="success"
-                message={notifydata?.message}
-                key={'top' + 'right'}
-            />
-
+            <Loader loading={loading} />
             {cartItems?.products?.length>0&&
             <div className='cartIcon'>
                 <ShoppingCartIcon 
@@ -80,6 +68,8 @@ const Cart = () => {
                                 prodId={prod.product}
                                 quantity={prod?.quantity}
                                 getCartByUserId={getCartByUserId}
+                                setLoading={setLoading}
+                                enqueueSnackbar={enqueueSnackbar}
                             />
                         ))}
             </div>

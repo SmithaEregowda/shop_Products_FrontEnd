@@ -4,11 +4,14 @@ import cookieCutter from 'cookie-cutter'
 import { getOrdersByUser } from '../../services/orderservide';
 import OrderProducts from '../../components/product/OrderProducts';
 import { Button } from '@mui/material';
+import Loader from '../../components/loader';
 
 const Orders = () => {
   const [orders, setOrderItems] = useState();
+  const [loading,setLoading]=useState()
 
   useEffect(() => {
+    setLoading(true)
     let userId = cookieCutter.get('userId');
     const token = cookieCutter.get('token');
     const requestOptions = {
@@ -19,12 +22,14 @@ const Orders = () => {
     };
     getOrdersByUser(userId, requestOptions).then((data) => {
       setOrderItems(data?.orderDetails)
+      setLoading(false)
     });
 
   }, []);
 
   return (
     <div className='orders'>
+      <Loader {...{loading}} />
       {orders && orders.length > 0
         ?orders.map(order => (
           <div key={order._id}

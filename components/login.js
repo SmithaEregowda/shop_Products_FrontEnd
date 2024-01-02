@@ -4,21 +4,22 @@ import { forgotpassword, getUser, login } from '../services/usersevice'
 import cookieCutter from 'cookie-cutter'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
+import { useSnackbar } from 'notistack';
+import Loader from './loader'
+
 const Login = ({ setLogin, setOpenModal, handleUser }) => {
+    const { enqueueSnackbar } = useSnackbar();
     const [loginObj, setloginObj] = useState({})
     const [loading, setLoading] = useState(false)
-    const [notify, setNotify] = useState(false)
-    const [notifydata, setMessage] = useState({})
     const [forgotPasswordflow, setFlow] = useState(false)
     const [forgotUser, setForgotUser] = useState('')
     const updateuserInput = (e) => {
         setloginObj({ ...loginObj, [e.target.name]: e.target.value })
     }
-    const dispatch = useDispatch()
     const router = useRouter();
     const handleForm = () => {
         setLoading(true)
-        setNotify(true)
+        
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -26,7 +27,8 @@ const Login = ({ setLogin, setOpenModal, handleUser }) => {
         };
         login(requestOptions).then(data => {
             setLoading(false)
-            setMessage(data)
+            enqueueSnackbar(data?.message, 
+            { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             if (data?.token && data?.user) {
                 handleUser(data?.user)
                 setOpenModal(false)
@@ -45,7 +47,6 @@ const Login = ({ setLogin, setOpenModal, handleUser }) => {
         };
         forgotpassword(requestOptions).then(data => {
             setLoading(false)
-            setMessage(data)
             if (data?.link) {
                 setOpenModal(false)
                 router.push(data?.link)
@@ -54,16 +55,7 @@ const Login = ({ setLogin, setOpenModal, handleUser }) => {
     }
     return (
         <div className='form-Item'>
-            {loading && <CircularProgress />}
-            <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                open={notify}
-                autoHideDuration={3000}
-                onClose={() => setNotify(false)}
-                severity="success"
-                message={notifydata?.message}
-                key={'top' + 'right'}
-            />
+            <Loader loading={loading}/>
             {
                 forgotPasswordflow ?
                     <div className='input-items'>

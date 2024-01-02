@@ -11,6 +11,7 @@ import { getwishlistByUser, postWishList } from '../services/wishlistsevice';
 import Footersection from '../components/footer/footersection';
 import CarouselComponent from '../components/carousel';
 import Loader from '../components/loader';
+import { useSnackbar } from 'notistack';
 
 
 const HomePage = () => {
@@ -21,11 +22,10 @@ const HomePage = () => {
   const [cartItems, setCartItems] = useState([])
   const [wishListItems, setWishListItems] = useState([])
   const [loading, setLoading] = useState(false)
-  const [notify, setNotify] = useState(false)
-  const [notifydata, setMessage] = useState({})
   const router = useRouter();
   const API_PATH='https://shop-products-api-1q6w.vercel.app';
-  const [pageno,setPageNo]=useState(1)
+  const [pageno,setPageNo]=useState(1);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setLoading(true)
@@ -152,16 +152,14 @@ const HomePage = () => {
       };
   
       postCart(requestOptions).then((data) => {
-        setMessage(data)
-        setNotify(true)
+        enqueueSnackbar(data?.message, 
+          { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
         setLoading(false)
         router.reload('/')
       })
     }else{
-      setMessage({
-        message:"please try to login"
-      })
-        setNotify(true)
+      enqueueSnackbar("please Try to login", 
+        { variant:'error',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
         setLoading(false)
     }
     
@@ -186,16 +184,14 @@ const HomePage = () => {
       };
   
       postWishList(requestOptions).then((data) => {
-        setMessage(data)
-        setNotify(true)
+        enqueueSnackbar(data?.message, 
+          { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
         setLoading(false)
         router.reload('/')
       })
     }else{
-      setMessage({
-        message:"please try to login"
-      })
-      setNotify(true)
+      enqueueSnackbar("please try to login", 
+        { variant:'error',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
       setLoading(false)
     }
   }
@@ -208,10 +204,8 @@ const HomePage = () => {
     query: { id: prod?._id, isfromcart: false }
   })
  }else{
-  setMessage({
-    message:"please try to login"
-  })
-    setNotify(true)
+  enqueueSnackbar("please try to login", 
+    { variant:'error',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
 }
  }
 
@@ -223,19 +217,10 @@ const HomePage = () => {
  }
 
   return (
-  <div>
+  <div style={{marginTop:"2rem"}}>
     <Loader loading={loading} />
       <CarouselComponent />
       <div className='products-details'>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={notify}
-        autoHideDuration={2000}
-        onClose={() => setNotify(false)}
-        severity="success"
-        message={notifydata?.message}
-        key={'top' + 'right'}
-      />
       <div className='products'>
         {products && products.map(prod => (
           <div className='product-card' key={prod?._id}>
