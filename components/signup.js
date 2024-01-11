@@ -20,7 +20,8 @@ const SignUp = ({ setLogin, setOpenModal, createinternalusers }) => {
         signup(requestOptions).then(data => {
             setLoading(false)
                 enqueueSnackbar(data?.message, 
-                { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+                { variant:data?.status==200?'success':"error",
+                anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             if (data?.user && setLogin) {
                 setLogin(true)
             }

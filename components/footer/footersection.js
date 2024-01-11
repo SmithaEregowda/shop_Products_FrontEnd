@@ -58,7 +58,7 @@ const Footersection = () => {
             </div>
         </div>
         <div className={styles.linkInfo}>
-            <div>
+            <div className={styles.firstBox}>
                 <div>Become seller</div>
                 <div>Gift Cards</div>
                 <div>Help Center</div>

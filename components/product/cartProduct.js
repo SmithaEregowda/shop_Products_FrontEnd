@@ -43,7 +43,7 @@ const CartProduct = ({ prodId, quantity, getCartByUserId ,setLoading,enqueueSnac
         };
         postCart(requestOptions).then((data) => {
             enqueueSnackbar(data?.message, 
-                { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+                { variant:data?.status==200?'success':"error",anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             setLoading(false)
             //router.reload('/cart')
         })
@@ -63,7 +63,8 @@ const CartProduct = ({ prodId, quantity, getCartByUserId ,setLoading,enqueueSnac
         removefromCart(userId, prodId, requestOptions)
             .then((data) => {
                 enqueueSnackbar(data?.message, 
-                    { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+                    { variant:data?.status==200?'success':"error"
+                    ,anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
                 getCartByUserId(token, userId)
                 setLoading(false)
                 //router.reload('/cart')

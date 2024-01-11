@@ -12,7 +12,8 @@ const OrderProducts =
         handeleTotalPrice,
         isfromOrders,
         isDeliverd,
-        address
+        address,
+        orderInfo
     }) => {
         const [productdetails, setDetails] = useState({});
         const router = useRouter();
@@ -48,7 +49,8 @@ const OrderProducts =
                         address,
                         productPrice,
                         router,
-                        API_PATH
+                        API_PATH,
+                        orderInfo
                     }
                 }
             />

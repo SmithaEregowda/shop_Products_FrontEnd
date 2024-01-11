@@ -28,13 +28,16 @@
     }
     .linkInfo{
             border-top: 1px solid #454d5e;
-            padding: 25px 0;
+            padding: 25px 10px;
             color: white;
             font-size: 12px;
             font-weight: 400;
-            margin-bottom: 9px;
-            display: grid;
-            grid-template-columns: 1fr 10rem;
+            display: flex;
+            flex-wrap: wrap;
+            grid-gap: 1rem;
+            .firstBox{
+                flex: 1;
+            }
             div{
                 display: flex;
                 justify-content: space-around;

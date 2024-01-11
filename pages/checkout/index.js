@@ -79,7 +79,8 @@ const CheckOut = () => {
 
     postOrder(requestOptions).then((data) => {
       enqueueSnackbar(data?.message, 
-        { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+        { variant:data?.status==200?'success':"error"
+        ,anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
       if (!router.query.id && data?.orderDetails) {
         let userId = cookieCutter.get('userId');
         const token = cookieCutter.get('token');

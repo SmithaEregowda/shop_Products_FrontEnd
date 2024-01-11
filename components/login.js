@@ -17,6 +17,7 @@ const Login = ({ setLogin, setOpenModal, handleUser }) => {
         setloginObj({ ...loginObj, [e.target.name]: e.target.value })
     }
     const router = useRouter();
+
     const handleForm = () => {
         setLoading(true)
         
@@ -25,10 +26,12 @@ const Login = ({ setLogin, setOpenModal, handleUser }) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginObj)
         };
+        
         login(requestOptions).then(data => {
             setLoading(false)
             enqueueSnackbar(data?.message, 
-            { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+            { variant:data?.status==200?'success':"error",
+            anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             if (data?.token && data?.user) {
                 handleUser(data?.user)
                 setOpenModal(false)

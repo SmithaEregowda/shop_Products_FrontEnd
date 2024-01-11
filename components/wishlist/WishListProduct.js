@@ -44,7 +44,8 @@ const WishListProduct = ({ prodId, cartItems, setLoading, getWishListByUserId ,e
 
         postCart(requestOptions).then((data) => {
             enqueueSnackbar(data?.message, 
-                { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+                { variant:data?.status==200?'success':"error"
+                ,anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             setLoading(false)
             router.reload('/wishlist')
         })
@@ -63,7 +64,8 @@ const WishListProduct = ({ prodId, cartItems, setLoading, getWishListByUserId ,e
         removefromwishlist(userId, prodId, requestOptions)
             .then((data) => {
                 enqueueSnackbar(data?.message, 
-                    { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+                    { variant:data?.status==200?'success':"error"
+                    ,anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
                 getWishListByUserId(token, userId)
                 setLoading(false)
                 //router.reload('/cart')

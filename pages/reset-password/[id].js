@@ -31,7 +31,7 @@ const ResetPassword = () => {
     };
     resetPassword(requestOptions,id).then(data => {
       enqueueSnackbar(data?.message, 
-        { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+        { variant:data?.status==200?'success':"error",anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
       setLoading(false)
       if(data?.message==="password reseted  successfully"){
         router.push('/index');

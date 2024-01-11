@@ -43,6 +43,7 @@ const Orders = () => {
                     isfromOrders={true}
                     isDeliverd={prod?.isDeliverd}
                     address={order?.address}
+                    orderInfo={order}
                   />
                 ))
                 }

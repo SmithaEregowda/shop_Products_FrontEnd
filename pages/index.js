@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { clearCart, getCartByUser, postCart } from '../services/cartservice';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { getwishlistByUser, postWishList } from '../services/wishlistsevice';
+import { getwishlistByUser, postWishList, removefromwishlist } from '../services/wishlistsevice';
 import Footersection from '../components/footer/footersection';
 import CarouselComponent from '../components/carousel';
 import Loader from '../components/loader';
@@ -153,7 +153,7 @@ const HomePage = () => {
   
       postCart(requestOptions).then((data) => {
         enqueueSnackbar(data?.message, 
-          { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+          { variant:data?.status==200?'success':"error",anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
         setLoading(false)
         router.reload('/')
       })
@@ -185,7 +185,7 @@ const HomePage = () => {
   
       postWishList(requestOptions).then((data) => {
         enqueueSnackbar(data?.message, 
-          { variant:'success',anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+          { variant:data?.status==200?'success':"error",anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
         setLoading(false)
         router.reload('/')
       })
@@ -216,6 +216,25 @@ const HomePage = () => {
   getAllProductsAfterDelete(token,page);
  }
 
+ const handleremove = (prodId) => {
+  setLoading(true)
+  let userId = cookieCutter.get('userId');
+  const token = cookieCutter.get('token');
+  const requestOptions = {
+      method: 'DELETE',
+      headers: {
+          Authorization: `Bearer ${token}`
+      }
+  };
+  removefromwishlist(userId, prodId, requestOptions)
+      .then((data) => {
+          enqueueSnackbar(data?.message, 
+              { variant:data?.status==200?'success':"error",anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+          setLoading(false)
+          router.reload('/')
+      })
+}
+
   return (
   <div style={{marginTop:"2rem"}}>
     <Loader loading={loading} />
@@ -230,7 +249,7 @@ const HomePage = () => {
                   (wishListItems && wishListItems.length > 0 &&
                     wishListItems.findIndex(p => p.productId.toString() === prod?._id) > -1) ?
                     <FavoriteIcon
-                      onClick={() => { }}
+                      onClick={() => handleremove(prod?._id)}
                     />
                     :
                     <FavoriteBorderIcon
