@@ -10,6 +10,13 @@ export  function postOrder(requestOptions) {
        }).then(data=>{return data;} )
            return data;
    }
+   export function CancelOrder(requestOptions,orderId){
+    const data =fetch(`${API_PATH}/api/orders/cancelorder/${orderId}`,requestOptions)
+       .then(res => {
+           return res.json();
+       }).then(data=>{return data;} )
+           return data;
+   }
    export  function getOrdersByUser(userId,requestOptions) {
     const data =fetch(`${API_PATH}/api/orders/${userId}`,requestOptions)
        .then(res => {

@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 import { Avatar, Box, Button, Modal, Step, StepLabel, Stepper } from '@mui/material'
+import cookieCutter from 'cookie-cutter'
+import { CancelOrder } from '../../services/orderservide';
+import { useSnackbar } from 'notistack';
+import Loader from '../loader';
 
 const OrderProduct = ({
     productdetails,
@@ -7,9 +11,12 @@ const OrderProduct = ({
     steps,
     isDeliverd,
     API_PATH,
-    orderInfo
+    orderInfo,
+    getOrders
 }) => {
     const [open, setOpen] = React.useState(false);
+    const { enqueueSnackbar } = useSnackbar();
+    const [loading,setLoading]=useState(false)
     
     const handleOpen = () => {
       setOpen(true);
@@ -30,11 +37,32 @@ const OrderProduct = ({
       };
 
     const cancelOrder=()=>{
-        console.log("cancel this")
+        setLoading(true)
+    const token = cookieCutter.get('token');
+    const payload = {
+      prodId: productdetails?._id
+    }
+    const requestOptions = {
+      method: 'Put',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }
+    CancelOrder(requestOptions,orderInfo?._id).then((data)=>{
+        setOpen(false)
+        enqueueSnackbar(data?.message, 
+            { variant:data?.status==200?'success':"error"
+            ,anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+            getOrders()
+            setLoading(false)
+    })
     }
 
   return (
     <>
+     <Loader loading={loading} />
     <div className='cart-Item' onClick={()=>setOpen(true)}>
             <div className='cart-Image'>
                 <Avatar
@@ -93,6 +121,7 @@ const OrderProduct = ({
         aria-labelledby="child-modal-title"
         aria-describedby="child-modal-description"
       >
+       
         <Box sx={{ ...style, width: "40%" }}>
         <div className='title'>
         <div className='title-overlay'> 

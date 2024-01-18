@@ -11,6 +11,10 @@ const Orders = () => {
   const [loading,setLoading]=useState()
 
   useEffect(() => {
+    getOrders()
+  }, []);
+
+  const getOrders=()=>{
     setLoading(true)
     let userId = cookieCutter.get('userId');
     const token = cookieCutter.get('token');
@@ -24,8 +28,7 @@ const Orders = () => {
       setOrderItems(data?.orderDetails)
       setLoading(false)
     });
-
-  }, []);
+  }
 
   return (
     <div className='orders'>
@@ -44,6 +47,7 @@ const Orders = () => {
                     isDeliverd={prod?.isDeliverd}
                     address={order?.address}
                     orderInfo={order}
+                    getOrders={getOrders}
                   />
                 ))
                 }
