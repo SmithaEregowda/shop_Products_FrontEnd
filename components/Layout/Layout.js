@@ -1,12 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react'
-import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import UserData from './user';
 import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { PERMISSIONS } from './constant';
 import { useRouter } from 'next/router';
+
+
 const Layout = ({ children }) => {
     const userdata = useSelector(state => state.user);
     const [permissions, setPermission] = useState([])
@@ -18,7 +18,14 @@ const Layout = ({ children }) => {
         setScrollNum(window.scrollY)
     }
 
-    // window.addEventListener("scroll",changeNavcolor);
+    useEffect(() => {
+     
+            window.addEventListener("scroll",changeNavcolor);
+          return () => document.removeEventListener("scroll", changeNavcolor);
+        
+      }, []);
+
+    
 
     useEffect(() => {
         if (userdata?.userType === "external user") {
@@ -49,9 +56,13 @@ const Layout = ({ children }) => {
                 <div className={`leftItems ${shownavs&&"leftItemsgrid"}`}>
                <div className='layout-items'>
                             {permissions && permissions.length > 0 && permissions.map(item => (
-                                <div key={item} onClick={()=>router.push(item)}>
-                                    <Typography sx={{ minWidth: 100 }}>{item.toUpperCase()}</Typography>
+                                <div key={item?.name} className='layout-item' >
+                                    <div> {item?.icon}</div>
+                                    <div onClick={()=>router.push(item?.name)}>
+                                    <Typography sx={{ marginRight: 3}}>{item?.name?.toUpperCase()}</Typography>
                                 </div>
+                                </div>
+                               
                             ))}
                 </div>
                 <div className='signup-items'>

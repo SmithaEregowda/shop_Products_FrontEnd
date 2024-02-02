@@ -6,6 +6,8 @@ import { postCart } from '../../services/cartservice';
 import { useRouter } from 'next/router';
 import { removefromwishlist } from '../../services/wishlistsevice';
 import styles from './wishlist.module.scss'
+import CloseIcon from '@mui/icons-material/Close';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const WishListProduct = ({ prodId, cartItems, setLoading, getWishListByUserId ,enqueueSnackbar}) => {
         const API_PATH='https://shop-products-api-1q6w.vercel.app'
@@ -75,7 +77,11 @@ const WishListProduct = ({ prodId, cartItems, setLoading, getWishListByUserId ,e
     return (
         <div className={styles.wishlistRow} key={productdetails?.productId}>
             <div className={styles.prodImage}>
-            <div className='product-imgContainer'>
+                <div  onClick={() => handledelete(productdetails?._id)}>
+                <CancelIcon color='action' />
+                </div>
+
+            <div className={`product-imgContainer ${styles.productImgContainer}`}>
                 <Avatar
                     sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
                     src={`${API_PATH}/` + productdetails?.productImg}
@@ -116,15 +122,6 @@ const WishListProduct = ({ prodId, cartItems, setLoading, getWishListByUserId ,e
                                 Add To Cart
                             </Button>
                     }
-
-                    <Button
-                        variant="contained"
-                        color='error'
-                        onClick={() => handledelete(productdetails?._id)}
-                        fullWidth
-                    >
-                        Remove
-                    </Button>
                 </div>
             </div>
         </div>

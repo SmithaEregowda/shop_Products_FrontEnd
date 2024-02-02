@@ -236,9 +236,11 @@ const HomePage = () => {
 }
 
   return (
-  <div style={{marginTop:"2rem"}}>
+  <div style={{marginTop:"4rem"}}>
     <Loader loading={loading} />
+      <div className='carousel'>
       <CarouselComponent />
+      </div>
       <div className='products-details'>
       <div className='products'>
         {products && products.map(prod => (

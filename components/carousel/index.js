@@ -2,14 +2,17 @@
 import Image from 'next/image'
 import React from 'react'
 import { Carousel } from 'react-responsive-carousel'
-import veg1 from './images/veg1.jpg'
-import veg2 from './images/veg2.jpg'
-import veg3 from './images/veg3.jpg'
+import veg1 from './images/veg1.png'
+import veg2 from './images/veg2.png'
+import veg3 from './images/veg3.png'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 const CarouselComponent= () => {
   return (
-    <Carousel showArrows={true} autoPlay showThumbs={false} infiniteLoop={true}>
+    <Carousel showArrows={true} 
+    autoPlay showThumbs={false} 
+    infiniteLoop={true}
+    >
                 <div>
                     <Image src={veg1} 
                     width={500}
