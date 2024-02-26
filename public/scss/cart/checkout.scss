@@ -81,3 +81,13 @@
         padding: 2rem;
     }
 }
+
+@media screen and (max-width:750px){
+    .order-details{
+        grid-template-columns: none !important;
+        min-height: 0rem !important;
+    }
+    .product-summary,.ordersection{
+        min-height: 0rem !important;
+    }
+}

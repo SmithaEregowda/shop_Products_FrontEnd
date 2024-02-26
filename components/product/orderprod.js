@@ -122,7 +122,7 @@ const OrderProduct = ({
         aria-describedby="child-modal-description"
       >
        
-        <Box sx={{ ...style, width: "40%" }}>
+        <Box sx={{ ...style }} className='width-popup'>
         <div className='title'>
         <div className='title-overlay'> 
         {productdetails?.title}
