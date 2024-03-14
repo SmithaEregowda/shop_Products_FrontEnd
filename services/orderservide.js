@@ -26,7 +26,7 @@ export  function postOrder(requestOptions) {
    }
    
    export  function postPayment(requestOptions) {
-    const data =fetch(`${API_PATH}/api/pay`,requestOptions)
+    const data =fetch(`http://localhost:8080/api/pay`,requestOptions)
        .then(res => {
            return res.json();
        }).then(data=>{return data;} )

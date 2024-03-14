@@ -23,6 +23,7 @@ const CheckOut = () => {
   const [deliveryCharges]=useState(50)
   const [activeStep,setActiveStep]=useState("shipinfo");
   const { enqueueSnackbar } = useSnackbar();
+  const [paymentObj,setPaymentObj]=useState()
 
   useEffect(() => {
     setLoading(true)
@@ -95,6 +96,9 @@ const CheckOut = () => {
           router.push("/orders")
           setLoading(false)
         })
+      }else{
+        router.push("/orders")
+          setLoading(false)
       }
     })
   }
@@ -192,7 +196,9 @@ const CheckOut = () => {
                 handelStep,
                 orderHandler,
                 setPayMentMode,
-                PayMentMode
+                PayMentMode,
+                paymentObj,
+                setPaymentObj
               }}
               />
             }

@@ -3,3 +3,16 @@
         margin: 1rem 0;
     }
 }
+.paymentSuccess{
+    display: grid;
+    justify-content: center;
+    grid-gap: 1rem;
+    .payIcon{
+        display: grid;
+        justify-content: center;
+    }
+    .payAmt{
+        display: grid;
+        justify-content: center;
+    }
+}

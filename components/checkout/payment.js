@@ -7,7 +7,8 @@ const PaymentDetails = ({
   handelStep,
   setPayMentMode,
   PayMentMode,
-  orderHandler
+  orderHandler,
+  paymentObj,setPaymentObj
 }) => {
   const handleChange=(e)=>{
     setPayMentMode({
@@ -18,7 +19,7 @@ const PaymentDetails = ({
   return (
     <div className={styles.paymentWrapper}>
           <div>
-            <FormControl>
+            <FormControl disabled={paymentObj?.paidamount}>
               <FormLabel id="demo-radio-buttons-group-label">Payment Options</FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -26,7 +27,7 @@ const PaymentDetails = ({
                 name="radio-buttons-group"
                 onChange={handleChange}
               >
-            <FormControlLabel value="phonepe" 
+            {/* <FormControlLabel value="phonepe" 
             control={<Radio />} label="Phone Pe" 
             className={styles.payOptions} />
              {PayMentMode?.paymentType==="phonepe"&&
@@ -38,13 +39,13 @@ const PaymentDetails = ({
              />
              {PayMentMode?.paymentType==="upi"&&
               <div>UPI Payment is not available at the moment</div>
-             }
+             } */}
             <FormControlLabel value="credit" 
             control={<Radio />} label="Credit Card"
             className={styles.payOptions}
              />
              {PayMentMode?.paymentType==="credit"&&
-              <CardPayStrip />
+              <CardPayStrip {...{paymentObj,setPaymentObj}}/>
              }
             <FormControlLabel value="cash" 
             control={<Radio />} label="Cash On Delivery" 
