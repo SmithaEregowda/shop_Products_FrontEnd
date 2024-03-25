@@ -17,7 +17,7 @@ const CheckOut = () => {
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0)
   const [Address, setShipAddress] = useState({});
-  const [PayMentMode, setPayMentMode] = useState({});
+  const [PayMentMode, setPayMentMode] = useState({paymentType:"credit"});
   const [loading, setLoading] = useState(false)
   const [products, setProducts] = useState([]);
   const [deliveryCharges]=useState(50)
@@ -78,7 +78,8 @@ const CheckOut = () => {
       body: JSON.stringify(payload)
     }
 
-    postOrder(requestOptions).then((data) => {
+    postOrder(requestOptions).then(
+      (data) => {
       enqueueSnackbar(data?.message, 
         { variant:data?.status==200?'success':"error"
         ,anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
@@ -200,6 +201,7 @@ const CheckOut = () => {
                 paymentObj,
                 setPaymentObj
               }}
+              paybleamount={totalPrice+deliveryCharges}
               />
             }
           {/* <div className='add-fileds'>

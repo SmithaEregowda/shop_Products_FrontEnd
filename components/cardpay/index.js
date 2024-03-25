@@ -8,7 +8,7 @@ import styles from './cardpay.module.scss'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 const CardPayStrip = ({
-  paymentObj,setPaymentObj
+  paymentObj,setPaymentObj,paybleamount
 }) => {
     const PUBLIC_KEY = "pk_test_51LSgoUSFmHpNb8iU7NUg5wItbwWrQ2r3wBBUfpMKwhd9LIUXlMMi5ravjHkUAp0d8Dv6VbsKWgaddyoRI1sYc9Sn00SvKhH9bc";
     const stripeTestPromise = loadStripe('pk_test_51LSgoUSFmHpNb8iU7NUg5wItbwWrQ2r3wBBUfpMKwhd9LIUXlMMi5ravjHkUAp0d8Dv6VbsKWgaddyoRI1sYc9Sn00SvKhH9bc');
@@ -17,7 +17,7 @@ const CardPayStrip = ({
     <Container>
     {!paymentObj?
     <Elements stripe={stripeTestPromise}>
-    <CheckoutForm {...{setPaymentObj}}/>
+    <CheckoutForm {...{setPaymentObj,paybleamount}}/>
   </Elements>
   :
   <div className={styles.paymentSuccess}> 

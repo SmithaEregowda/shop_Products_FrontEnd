@@ -5,18 +5,20 @@ import { postPayment } from "../../services/orderservide";
 import { Button } from "@mui/material";
 import styles from './cardpay.module.scss'
 import Loader from "../loader";
+import { useSnackbar } from "notistack";
 
-export const CheckoutForm = ({setPaymentObj}) => {
+export const CheckoutForm = ({setPaymentObj,paybleamount}) => {
   const stripe = useStripe();
-  const elements = useElements();
-  const [loading,setLoading]=useState(false)
+  const checkelements = useElements();
+  const [loading,setLoading]=useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = async (event) => {
     setLoading(true)
     event.preventDefault();
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
-      card: elements.getElement(CardElement),
+      card: checkelements.getElement(CardElement),
     });
     console.log(error,paymentMethod)
 
@@ -33,12 +35,18 @@ export const CheckoutForm = ({setPaymentObj}) => {
           Authorization: `Bearer ${Authtoken}`
         },
         body: JSON.stringify({
-          amount: 200,
+          amount: paybleamount,
           token: paymentToken
         })
       }
       postPayment(requestOptions).then((data) => {
-        setPaymentObj(data);
+        if(data?.status===200){
+          setPaymentObj(data);
+        }else{
+          enqueueSnackbar(data?.message, 
+            { variant:data?.status==200?'success':"error"
+            ,anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+        }
         setLoading(false)
       })
 
@@ -47,6 +55,9 @@ export const CheckoutForm = ({setPaymentObj}) => {
       setLoading(false)
     }
   };
+
+ 
+  
 
   return (
     <div className={styles.paymentWrapper}>

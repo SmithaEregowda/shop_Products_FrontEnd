@@ -8,7 +8,8 @@ const PaymentDetails = ({
   setPayMentMode,
   PayMentMode,
   orderHandler,
-  paymentObj,setPaymentObj
+  paymentObj,setPaymentObj,
+  paybleamount
 }) => {
   const handleChange=(e)=>{
     setPayMentMode({
@@ -23,7 +24,7 @@ const PaymentDetails = ({
               <FormLabel id="demo-radio-buttons-group-label">Payment Options</FormLabel>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="phonepe"
+                defaultValue="credit"
                 name="radio-buttons-group"
                 onChange={handleChange}
               >
@@ -45,7 +46,7 @@ const PaymentDetails = ({
             className={styles.payOptions}
              />
              {PayMentMode?.paymentType==="credit"&&
-              <CardPayStrip {...{paymentObj,setPaymentObj}}/>
+              <CardPayStrip {...{paymentObj,setPaymentObj,paybleamount}}/>
              }
             <FormControlLabel value="cash" 
             control={<Radio />} label="Cash On Delivery" 
@@ -68,6 +69,7 @@ const PaymentDetails = ({
              className={styles.payBtn}
              color="success"
              onClick={orderHandler}
+             disabled={!paymentObj&&PayMentMode?.paymentType!=="cash"}
              >
               Place Order
             </Button>
