@@ -3,15 +3,21 @@ import {  Button, TextField } from '@mui/material'
 import { signup } from '../services/usersevice'
 import { useSnackbar } from 'notistack'
 import Loader from './loader'
+import { useRouter } from 'next/router'
 const SignUp = ({ setLogin, setOpenModal, createinternalusers }) => {
     const [signupObj, setSignupObj] = useState({})
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const router=useRouter();
     const { enqueueSnackbar } = useSnackbar();
     const updateuserInput = (e) => {
         setSignupObj({ ...signupObj, [e.target.name]: e.target.value })
     }
     const handleForm = () => {
         setLoading(true)
+        if(createinternalusers){
+            signupObj["userType"]="internal user"
+            signupObj["userRole"] ="normaladmin"
+        }
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -24,6 +30,10 @@ const SignUp = ({ setLogin, setOpenModal, createinternalusers }) => {
                 anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
             if (data?.user && setLogin) {
                 setLogin(true)
+            }
+            if(createinternalusers){
+                router.reload("/managesellers");
+                setOpenModal(false)
             }
             //setOpenModal(false)
         })
@@ -79,7 +89,7 @@ const SignUp = ({ setLogin, setOpenModal, createinternalusers }) => {
                     />
                 </div>
 
-                {createinternalusers &&
+                {/* {createinternalusers &&
                     <div className='input-field'>
                         <TextField
                             id="outlined-basic"
@@ -103,7 +113,7 @@ const SignUp = ({ setLogin, setOpenModal, createinternalusers }) => {
                             onChange={(e) => updateuserInput(e)}
                         />
                     </div>
-                }
+                } */}
 
 
                 <div className='input-field'>

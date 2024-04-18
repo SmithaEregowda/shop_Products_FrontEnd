@@ -31,7 +31,12 @@ const Layout = ({ children }) => {
         if (userdata?.userType === "external user") {
             setPermission(PERMISSIONS?.ExternaUser)
         } else if(userdata?.userType === "internal user") {
-            setPermission(PERMISSIONS?.InternalUser)
+            if(userdata?.userRole!=="superadmin"){
+                setPermission(PERMISSIONS?.InternalUser)
+            }else{
+                setPermission(PERMISSIONS?.SuperAdmin)
+            }
+            
         }else{
             setPermission([])
         }

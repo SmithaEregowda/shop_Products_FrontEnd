@@ -1,4 +1,5 @@
 
+// let API_PATH='http://localhost:3000'
 let API_PATH=''
 if(process.env.NODE_ENV==="production"){
     API_PATH='https://shop-products-api-1q6w.vercel.app'

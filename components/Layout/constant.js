@@ -12,5 +12,15 @@ export const PERMISSIONS={
         name:"orders",
         icon:<ListAltIcon color='success' />
     }],
-    InternalUser:['addproduct','requests','manageusers']
+    InternalUser:[{
+        name:"addproduct",
+        icon:<ListAltIcon color='success' />
+    },{
+        name:"requests",
+        icon:<ListAltIcon color='success' />
+    }],
+    SuperAdmin:[{
+        name:"managesellers",
+        icon:<ListAltIcon color='success' />
+    }]
 }

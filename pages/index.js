@@ -14,9 +14,9 @@ import Loader from '../components/loader';
 import { useSnackbar } from 'notistack';
 
 
-const HomePage = () => {
-  const [products, setProducts] = useState([]);
-  const [pagination, setPagination] = useState({})
+export default function HomePage({productsdata}){
+  const [products, setProducts] = useState(productsdata?.products);
+  const [pagination, setPagination] = useState(productsdata?.pagination)
   const userData = useSelector(state => state.user);
   const [userId, setuserId] = useState('')
   const [cartItems, setCartItems] = useState([])
@@ -26,34 +26,25 @@ const HomePage = () => {
   const API_PATH='https://shop-products-api-1q6w.vercel.app';
   const [pageno,setPageNo]=useState(1);
   const { enqueueSnackbar } = useSnackbar();
+  console.log(productsdata)
 
   useEffect(() => {
-    setLoading(true)
     setuserId(cookieCutter.get('userId'))
     const token = cookieCutter.get('token')
     if(userData?.userType === "internal user" ){
-      getProductsByUser();
+      if(userData?.userRole==="superadmin"){
+        router.push('/managesellers')
+      }else{
+        getProductsByUser();
+      }
+      
     }
     if(userData?.userType==="external user"){
     getAllProductsAfterDelete(token);
     getCartByUserId(token, cookieCutter.get('userId'));
     getWishListByUserId(token, cookieCutter.get('userId'))
     }
-    const requestOptions = {
-      method: 'GET',
-    };
-    let query={
-      limit:10,
-      pageNo:1
-    }
     setPageNo(1)
-
-    getAllProducts(requestOptions,query)
-      .then(data => {
-        setProducts(data?.products)
-        setPagination(data?.pagination)
-        setLoading(false)
-      })
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData?.userType]);
@@ -238,9 +229,10 @@ const HomePage = () => {
   return (
   <div style={{marginTop:"4rem"}}>
     <Loader loading={loading} />
+      {userData?.userRole!=="superadmin"&&
       <div className='carousel'>
       <CarouselComponent />
-      </div>
+      </div>}
       <div className='products-details'>
       <div className='products'>
         {products && products.map(prod => (
@@ -353,9 +345,23 @@ const HomePage = () => {
       </div>
      
     </div >
+    {userData?.userRole!=="superadmin"&&
      <Footersection />
+        }
   </div>
   )
 }
 
-export default HomePage
+
+// export async function getServerSideProps({req,res}){
+//   console.log(req.headers)
+//   const requestOptions = {
+//     method: 'GET',
+//   };
+//   let query={
+//     limit:10,
+//     pageNo:1
+//   }
+//   const resdata=await getAllProducts(requestOptions,query);
+//   return {props:{productsdata:resdata}}
+// }

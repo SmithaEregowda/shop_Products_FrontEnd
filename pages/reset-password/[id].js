@@ -99,4 +99,18 @@ const ResetPassword = () => {
   )
 }
 
-export default ResetPassword
+export default ResetPassword;
+
+// export async function getStaticPaths() {
+//   const paths = [{id:"a26be4a661ad939c56f828c5a54e526bc22700d0d14f3e2c037266796e81bb9f"},
+// {id:"b26be4a661ad939c56f828c5a54e526bc22700d0d14f3e2c037266796e81bb9h"}].map((post) => ({
+//     params: { id: post.id },
+//   }))
+ 
+//   return { paths,fallback: false }
+// }
+// export async function getStaticProps({ params }) {
+//   console.log(params)
+ 
+//   return { props:{0:"Hi"} }
+// }

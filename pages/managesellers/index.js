@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import cookieCutter from 'cookie-cutter'
-import { getAllUsers } from '../../services/usersevice';
+import { getAllUsers, removeUserById } from '../../services/usersevice';
 import { Avatar, Button, Dialog, DialogContent, DialogTitle, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import SignUp from '../../components/signup';
+import { useSnackbar } from 'notistack';
+import Loader from '../../components/loader';
+
+
 const ManageUsers = () => {
   const [users, setUsers] = useState([])
   const [openModal, setOpenModal] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     // setuserId(cookieCutter.get('userId'))
     const token = cookieCutter.get('token')
     getAllusers(token)
   }, []);
   const getAllusers = (token) => {
+    setLoading(true)
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -23,9 +31,32 @@ const ManageUsers = () => {
     getAllUsers(query, requestOptions)
       .then(data => {
         setUsers(data?.user)
+        setLoading(false)
       })
   }
+
+  const removeinternaluser=(user)=>{
+    setLoading(true)
+    const token = cookieCutter.get('token')
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+    };
+    removeUserById(user?._id, requestOptions)
+      .then(data => {
+        setLoading(false)
+                enqueueSnackbar(data?.message, 
+                { variant:data?.status==200?'success':"error",
+                anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+                getAllusers(token)
+      })
+  }
+
   return (
+    <>
+    <Loader loading={loading} />
     <div className='user-details'>
       <div className='createUser'>
         <Button
@@ -60,7 +91,7 @@ const ManageUsers = () => {
               <Button
                 variant="contained"
                 color='error'
-                onClick={() => { }}
+                onClick={() => removeinternaluser(user)}
                 fullWidth
               >
                 Remove
@@ -102,6 +133,7 @@ const ManageUsers = () => {
           />}
       </div> */}
     </div>
+    </>
   )
 }
 

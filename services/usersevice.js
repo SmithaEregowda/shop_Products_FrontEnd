@@ -57,3 +57,11 @@ export  function login(requestOptions) {
        }).then(data=>{return data;} )
            return data;
    }
+
+   export  function removeUserById(userId,requestOptions) {
+    const data =fetch(`${API_PATH}/api/user/${userId}`,requestOptions)
+       .then(res => {
+           return res.json();
+       }).then(data=>{return data;} )
+           return data;
+   }
