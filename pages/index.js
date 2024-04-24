@@ -44,6 +44,9 @@ export default function HomePage({productsdata}){
     getCartByUserId(token, cookieCutter.get('userId'));
     getWishListByUserId(token, cookieCutter.get('userId'))
     }
+    if(!userData){
+      getAllProductsAfterDelete(token);
+    }
     setPageNo(1)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -334,7 +337,9 @@ export default function HomePage({productsdata}){
 
         }
       </div>
-      <div className='pagination'>
+      {
+        products?.length>0&&
+        <div className='pagination'>
         {pagination &&
           <Pagination
             count={Math.ceil(pagination?.totalCount / pagination?.limit)}
@@ -343,6 +348,7 @@ export default function HomePage({productsdata}){
             color='primary'
           />}
       </div>
+      }
      
     </div >
     {userData?.userRole!=="superadmin"&&

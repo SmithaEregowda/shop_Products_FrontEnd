@@ -1,23 +1,33 @@
 .add-fileds{
-    margin: 2rem 2rem 0 2rem;
-    padding: 2rem;
-    background: white;
-    box-shadow: 5px 5px 5px 5px #888888 !important;
     .input-field{
         margin-bottom: 0.5rem;
     }
 }
+
+.addprodUser{
+    display: flex;
+    justify-content: center;
+}
 .add-product{
+    margin: 2rem 2rem 0 2rem;
+    padding: 2rem;
+    box-shadow: 5px 5px 5px 5px #888888 !important;
+    margin: 6rem 1rem 0;
+    width: 60%;
     .btnActions{
-        margin: 2rem;
-        padding: 2rem;
-        background: white;
-        box-shadow: 5px 5px 5px 5px #888888 !important;
+        // margin: 2rem;
+        // padding: 2rem;
+        // background: white;
+        // box-shadow: 5px 5px 5px 5px #888888 !important;
         display: grid;
         justify-content: center;
     }
 }
 .edit-product{
+    margin: 2rem 2rem 0 2rem;
+    padding: 2rem;
+    background: white;
+    box-shadow: 5px 5px 5px 5px #888888 !important;
     .btnActions{
         margin: 2rem;
         padding: 2rem;

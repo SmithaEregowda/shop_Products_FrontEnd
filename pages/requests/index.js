@@ -3,12 +3,13 @@ import React, { useEffect , useState} from 'react'
 import cookieCutter from 'cookie-cutter'
 import ReqProduct from '../../components/product/ReqProduct';
 import { getRequestByUser, processRequest } from '../../services/productservices';
+import Loader from '../../components/loader';
+import { useSnackbar } from 'notistack';
 
 const  Requests = () => {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false)
-  const [notify, setNotify] = useState(false)
-  const [notifydata, setMessage] = useState({})
+  const [loading, setLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const token = cookieCutter.get('token');
@@ -28,8 +29,8 @@ const  Requests = () => {
   const handleRequest=(requestoptionsProcess)=>{
     setLoading(true);
     processRequest(requestoptionsProcess).then((data)=>{
-      setMessage(data);
-      setNotify(true)
+      enqueueSnackbar(data?.message, 
+        { variant:data?.status==200||data?.status==201?'success':"error",anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
       const token = cookieCutter.get('token');
       const requestOptions = {
         method: 'GET',
@@ -50,21 +51,7 @@ const  Requests = () => {
 
   return (
     <div className='products-details'>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={notify}
-        autoHideDuration={2000}
-        onClose={() => setNotify(false)}
-        severity="success"
-        message={notifydata?.message}
-        key={'top' + 'right'}
-      />
+      <Loader loading={loading} />
       <div className='products'>
         {products && products.map(prod => (
          <ReqProduct 

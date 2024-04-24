@@ -5,6 +5,8 @@ import cookieCutter from 'cookie-cutter'
 import { addProduct } from '../../services/productservices'
 import { useRouter } from 'next/router'
 import ProductFileds from '../../components/product/ProductFileds'
+import Loader from '../../components/loader'
+import { useSnackbar } from 'notistack'
 
 const AddProduct = () => {
   const [productObj, setProduct] = useState({})
@@ -13,6 +15,7 @@ const AddProduct = () => {
   const [message, setMessage] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter();
+  const { enqueueSnackbar } = useSnackbar();
 
   const updateproductInput = (e) => {
     setProduct({ ...productObj, [e.target.name]: e.target.value });
@@ -32,10 +35,15 @@ const AddProduct = () => {
 
     addProduct(headers, formData).then((data) => {
       setLoading(false)
-        setFile(null)
-        setNotify(true);
-        setMessage(data)
-        router.push('/')
+      enqueueSnackbar(data?.message, 
+        { variant:data?.status==200?'success':"error",
+        anchorOrigin:{ vertical: 'top', horizontal: 'right' } });
+        if(data?.status===200){
+          setFile(null)
+          setNotify(true);
+          setMessage(data)
+          router.push('/')
+        }
     }
     )
   }
@@ -45,18 +53,11 @@ const AddProduct = () => {
   }
 
   return (
-    <div className='add-product'>
-      {loading && <CircularProgress />}
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={notify}
-        autoHideDuration={3000}
-        onClose={() => setNotify(false)}
-        severity="success"
-        message={message?.message}
-        key={'top' + 'right'}
-      />
-      <ProductFileds
+    <div className='addprodUser'>
+       <Loader loading={loading} />
+      <div className='add-product'>
+     <div >
+     <ProductFileds
         productObj={productObj}
         updateproductInput={updateproductInput}
         handlefile={handlefile}
@@ -72,6 +73,8 @@ const AddProduct = () => {
           Add Product
         </Button>
       </div>
+     </div>
+    </div>
     </div>
   )
 }

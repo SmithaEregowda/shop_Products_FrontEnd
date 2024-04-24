@@ -97,7 +97,11 @@ const ManageUsers = () => {
                 Remove
               </Button>
             </div>
-            <Dialog
+           
+          </div>
+        ))
+        }
+         <Dialog
               open={openModal}
               onClose={() => setOpenModal(false)}
               fullWidth
@@ -119,10 +123,6 @@ const ManageUsers = () => {
                 />
               </DialogContent>
             </Dialog>
-          </div>
-        ))
-
-        }
       </div>
       {/* <div className='pagination'>
         {pagination &&

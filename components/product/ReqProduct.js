@@ -13,6 +13,7 @@ const ReqProduct =
     processRequest
 }) => {
     const [productdetails, setDetails] = useState({});
+    const API_PATH='https://shop-products-api-1q6w.vercel.app';
     let steps = ["Ordered", "Shipped", "Delivered"];
     useEffect(() => {
         const token = cookieCutter.get('token');
@@ -67,21 +68,20 @@ const ReqProduct =
     <div className='product-card' key={productdetails?._id}>
             <div className='product-imgContainer'>
               <Avatar
-                sx={{ width: 100, height: 100, bgcolor: '#11cd6b' }}
-                src={'https://shop-products-api.vercel.app/' + productdetails?.productImg}
+                sx={{ width: "100%", height: 150, bgcolor: '#11cd6b' }}
+                src={`${API_PATH}/` + productdetails?.productImg}
                 variant="square"
               />
             </div>
+            <div className="product-footer">
             <div className='product-title'>
               {productdetails?.title}
             </div>
-            <div className='product-subTitle'>
-              {productdetails?.subTitle}
-            </div>
             <div className='product-price'>
-              {productdetails?.price}
+              RS.{productdetails?.price}
             </div>
-            <div>
+              </div>
+            <div className='product-step'>
               {
                 isDeliverd!="Canceled"?
                 <Stepper
@@ -107,7 +107,7 @@ const ReqProduct =
             </Stepper>
               }
                
-                        </div>
+          </div>
             <div className='product-Actions'>
               
                     <div className='add-Delete'>
