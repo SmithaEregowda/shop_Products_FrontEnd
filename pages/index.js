@@ -39,12 +39,13 @@ export default function HomePage({productsdata}){
       }
       
     }
+    console.log(userData)
     if(userData?.userType==="external user"){
     getAllProductsAfterDelete(token);
     getCartByUserId(token, cookieCutter.get('userId'));
     getWishListByUserId(token, cookieCutter.get('userId'))
     }
-    if(!userData){
+    if(Object.keys(userData).length===0){
       getAllProductsAfterDelete(token);
     }
     setPageNo(1)
