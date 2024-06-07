@@ -70,7 +70,6 @@ export default function HomePage({productsdata}){
   }
 
   const getAllProductsAfterDelete = (token,page) => {
-    console.log("first")
     setLoading(true)
     const requestOptions = {
       method: 'GET',
